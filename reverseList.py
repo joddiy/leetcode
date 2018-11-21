@@ -12,19 +12,19 @@ class ListNode(object):
 
 
 class Solution(object):
-    # def reverseList(self, head):
-    #     """
-    #     :type head: ListNode
-    #     :rtype: ListNode
-    #     """
-    #     new_tail = None
-    #     cur_node = head
-    #     while cur_node is not None:
-    #         tmp_node = ListNode(cur_node.val)
-    #         tmp_node.next = new_tail
-    #         new_tail = tmp_node
-    #         cur_node = cur_node.next
-    #     return new_tail
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        new_tail = None
+        cur_node = head
+        while cur_node is not None:
+            tmp_node = ListNode(cur_node.val)
+            tmp_node.next = new_tail
+            new_tail = tmp_node
+            cur_node = cur_node.next
+        return new_tail
 
     def reverseList(self, head):
         """

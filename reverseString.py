@@ -5,18 +5,18 @@
 # ------------------------------------------------------------------------
 
 class Solution(object):
-    # def reverseString(self, s):
-    #     """
-    #     :type s: str
-    #     :rtype: str
-    #     """
-    #     s = list(s)
-    #     length = len(s)
-    #     for i in range(length // 2):
-    #         tmp = s[length - i - 1]
-    #         s[length - i - 1] = s[i]
-    #         s[i] = tmp
-    #     return "".join(s)
+    def reverseString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        s = list(s)
+        length = len(s)
+        for i in range(length // 2):
+            tmp = s[length - i - 1]
+            s[length - i - 1] = s[i]
+            s[i] = tmp
+        return "".join(s)
 
     def reverseString(self, s):
         """

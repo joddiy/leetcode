@@ -13,29 +13,29 @@ class TreeNode(object):
 
 
 class Solution(object):
-    # def invertTree(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: TreeNode
-    #     """
-    #     if root is None:
-    #         return None
-    #     new_root = TreeNode(root.val)
-    #     tmp_list = [root] # BFS
-    #     tmp_list2 = [new_root]
-    #     while len(tmp_list) != 0:
-    #         cur_node = tmp_list.pop(0)
-    #         cur_node2 = tmp_list2.pop(0)
-    #         cur_node2.val = cur_node.val
-    #         if cur_node.right is not None:
-    #             tmp_list.append(cur_node.right)
-    #             cur_node2.left = TreeNode(cur_node.right.val)
-    #             tmp_list2.append(cur_node2.left)
-    #         if cur_node.left is not None:
-    #             tmp_list.append(cur_node.left)
-    #             cur_node2.right = TreeNode(cur_node.left.val)
-    #             tmp_list2.append(cur_node2.right)
-    #     return new_root
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if root is None:
+            return None
+        new_root = TreeNode(root.val)
+        tmp_list = [root] # BFS
+        tmp_list2 = [new_root]
+        while len(tmp_list) != 0:
+            cur_node = tmp_list.pop(0)
+            cur_node2 = tmp_list2.pop(0)
+            cur_node2.val = cur_node.val
+            if cur_node.right is not None:
+                tmp_list.append(cur_node.right)
+                cur_node2.left = TreeNode(cur_node.right.val)
+                tmp_list2.append(cur_node2.left)
+            if cur_node.left is not None:
+                tmp_list.append(cur_node.left)
+                cur_node2.right = TreeNode(cur_node.left.val)
+                tmp_list2.append(cur_node2.right)
+        return new_root
 
     # BFS
     def invertTree(self, root):
