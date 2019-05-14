@@ -11,10 +11,12 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+
         self.count = 0
 
         def extendPalindrome(s, left, right):
             while left >= 0 and right < len(s) and s[left] == s[right]:
+                print(s[left:right+1])
                 self.count += 1
                 left -= 1
                 right += 1
@@ -29,4 +31,4 @@ class Solution(object):
         return self.count
 
 
-print(Solution().countSubstrings("abc"))
+print(Solution().countSubstrings("aba"))
