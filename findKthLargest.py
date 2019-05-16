@@ -1,19 +1,17 @@
-
-
 class Solution(object):
-    def findKthLargest(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: int
-        """
-        import heapq
-        k_heap = nums[0:k]
-        heapq.heapify(k_heap)
-        for i in range(k, len(nums)):
-            heapq.heappush(k_heap, nums[i])
-            heapq.heappop(k_heap)
-        return heapq.heappop(k_heap)
+    # def findKthLargest(self, nums, k):
+    #     """
+    #     :type nums: List[int]
+    #     :type k: int
+    #     :rtype: int
+    #     """
+    #     import heapq
+    #     k_heap = nums[0:k]
+    #     heapq.heapify(k_heap)
+    #     for i in range(k, len(nums)):
+    #         heapq.heappush(k_heap, nums[i])
+    #         heapq.heappop(k_heap)
+    #     return heapq.heappop(k_heap)
 
     def findKthLargest(self, nums, k):
         """
