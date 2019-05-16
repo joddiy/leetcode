@@ -1,13 +1,4 @@
-from utils.tools import stringToTreeNode, treeNodeToString
-
-# Definition for a binary tree node.
-
-
-class TreeNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+from utils.tools import stringToTreeNode, treeNodeToString, TreeNode
 
 
 class Solution(object):
@@ -16,9 +7,18 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        
-        print(treeNodeToString(root))
-        return 0
+        #1: rob, 2: not rob
+        def recursive(root):
+            if not root:
+                return (0, 0)
+            L_maxes = recursive(root.left)
+            R_maxes = recursive(root.right)
+            return (
+                L_maxes[1] + R_maxes[1] + root.val,
+                max(L_maxes) + max(R_maxes)
+            )
+
+        return max(recursive(root))
 
 
 Solution().rob(stringToTreeNode("[3,2,3,null,3,null,1]"))
