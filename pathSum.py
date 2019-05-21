@@ -8,7 +8,15 @@ class Solution(object):
         :type sum: int
         :rtype: int
         """
-        return sum
+        def recursive(root, res):
+            if root:
+                res.append(root.val)
+                recursive(root.left, res)
+                recursive(root.right, res)
+
+        res = []
+        recursive(root, res)
+        return res
 
 
 Solution().pathSum(stringToTreeNode("[10,5,-3,3,2,null,11,3,-2,null,1]"), 8)
