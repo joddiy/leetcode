@@ -4,6 +4,7 @@
 # time: 2018/11/22 10:01 PM
 # ------------------------------------------------------------------------
 
+
 class TreeNode(object):
     def __init__(self, x):
         self.val = x
@@ -53,7 +54,8 @@ def inorderIterative(root):
             if label:
                 output.append(node.val)
             else:
-                stack.extend([(node.right, False), (node, True), (node.left, False)])
+                stack.extend(
+                    [(node.right, False), (node, True), (node.left, False)])
     return output
 
 
@@ -93,7 +95,8 @@ def preorderIterative(root):
             if label:
                 output.append(node.val)
             else:
-                stack.extend([(node.right, False), (node.left, False), (node, True)])
+                stack.extend(
+                    [(node.right, False), (node.left, False), (node, True)])
     return output
 
 
@@ -111,7 +114,8 @@ def postorderIterative(root):
             if label:
                 output.append(node.val)
             else:
-                stack.extend([(node, True), (node.right, False), (node.left, False)])
+                stack.extend(
+                    [(node, True), (node.right, False), (node.left, False)])
     return output
 
 
@@ -219,6 +223,7 @@ def treeNodeToString(root):
         queue.append(node.right)
     return "[" + output[:-2] + "]"
 
+
 class ListNode(object):
     def __init__(self, x):
         self.val = x
@@ -239,7 +244,8 @@ def stringToListNode(input):
 
     ptr = dummyRoot.next
     return ptr
-    
+
+
 def listNodeToString(node):
     if not node:
         return "[]"
