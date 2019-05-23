@@ -1,4 +1,5 @@
 from utils.tools import stringToListNode, ListNode
+from utils.tools import listNodeToString
 
 
 class Solution(object):

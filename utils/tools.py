@@ -3,6 +3,7 @@
 # author: joddiyzhang@gmail.com
 # time: 2018/11/22 10:01 PM
 # ------------------------------------------------------------------------
+import json
 
 
 class TreeNode(object):
@@ -231,7 +232,6 @@ class ListNode(object):
 
 
 def stringToListNode(input):
-    import json
     # Generate list from the input
     numbers = json.loads(input)
 
