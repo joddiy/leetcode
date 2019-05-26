@@ -286,4 +286,6 @@ def getLCS2(str1, str2):
                 dp[i][j] = max(dp[i-1][j], dp[i][j-1])
     return dp[-1][-1]
 
-getLCS2('1AB2345CD', '12345EF')
+def print_array(arr):
+    for i in range(len(arr)):
+        print(arr[i])
