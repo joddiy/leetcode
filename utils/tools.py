@@ -255,3 +255,35 @@ def listNodeToString(node):
         result += str(node.val) + ", "
         node = node.next
     return "[" + result[:-2] + "]"
+
+# 最长公共子串
+def getLCS1(str1, str2):
+    m = len(str1)
+    n = len(str2)
+    dp = [[0] * n for _ in range(m)]
+    ret = 0
+    for i in range(m):
+        dp[i][0] = 1 if str1[i] == str2[0] else 0
+    for j in range(n):
+        dp[0][j] = 1 if str1[0] == str2[j] else 0
+    for i in range(1, m):
+        for j in range(1, n):
+            if str1[i] == str2[j]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            ret = max(ret, dp[i][j])
+    return ret
+
+# 最长公共子序列
+def getLCS2(str1, str2):
+    m = len(str1)
+    n = len(str2)
+    dp = [[0] * n for _ in range(m)]
+    for i in range(1, m):
+        for j in range(1, n):
+            if str1[i] == str2[j]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[-1][-1]
+
+getLCS2('1AB2345CD', '12345EF')

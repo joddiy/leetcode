@@ -19,3 +19,5 @@ class Solution(object):
         res = []
         recursive(nums, [], res)
         return res
+
+Solution().permute([1,2,3,4,5])
