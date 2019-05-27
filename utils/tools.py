@@ -11,6 +11,9 @@ class TreeNode(object):
         self.val = x
         self.left = None
         self.right = None
+        
+    def __lt__(self, other):
+        return self.val < other.val
 
 
 def GenerateTree(list):
