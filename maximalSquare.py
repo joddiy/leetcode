@@ -21,5 +21,4 @@ class Solution(object):
         return max_v*max_v
 
 
-Solution().maximalSquare([['1']]
-                         )
+Solution().maximalSquare([['1']])
