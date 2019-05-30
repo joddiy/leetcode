@@ -12,6 +12,8 @@ class Solution(object):
             quot[num][num] = quot[den][den] = 1.0
             quot[num][den] = val
             quot[den][num] = 1 / val
+        
+        # Floyd–Warshall algorithm
         for k in quot:
             for i in quot[k]:
                 for j in quot[k]:
