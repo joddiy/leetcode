@@ -21,6 +21,7 @@ class Solution(object):
                     return False
             visit[i] = 1
             return True
+
         for i in range(numCourses):
             if not dfs(i):
                 return False
