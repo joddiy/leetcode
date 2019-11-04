@@ -3,12 +3,17 @@
 # author: joddiyzhang@gmail.com
 # time: 2018/11/22 10:01 PM
 # ------------------------------------------------------------------------
+import json
+
 
 class TreeNode(object):
     def __init__(self, x):
         self.val = x
         self.left = None
         self.right = None
+        
+    def __lt__(self, other):
+        return self.val < other.val
 
 
 def GenerateTree(list):
@@ -53,7 +58,8 @@ def inorderIterative(root):
             if label:
                 output.append(node.val)
             else:
-                stack.extend([(node.right, False), (node, True), (node.left, False)])
+                stack.extend(
+                    [(node.right, False), (node, True), (node.left, False)])
     return output
 
 
@@ -93,7 +99,8 @@ def preorderIterative(root):
             if label:
                 output.append(node.val)
             else:
-                stack.extend([(node.right, False), (node.left, False), (node, True)])
+                stack.extend(
+                    [(node.right, False), (node.left, False), (node, True)])
     return output
 
 
@@ -111,7 +118,8 @@ def postorderIterative(root):
             if label:
                 output.append(node.val)
             else:
-                stack.extend([(node, True), (node.right, False), (node.left, False)])
+                stack.extend(
+                    [(node, True), (node.right, False), (node.left, False)])
     return output
 
 
@@ -218,3 +226,72 @@ def treeNodeToString(root):
         queue.append(node.left)
         queue.append(node.right)
     return "[" + output[:-2] + "]"
+
+
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+    
+    def __lt__(self, other):
+        return self.val < other.val
+
+
+def stringToListNode(input):
+    # Generate list from the input
+    numbers = json.loads(input)
+
+    # Now convert that list into linked list
+    dummyRoot = ListNode(0)
+    ptr = dummyRoot
+    for number in numbers:
+        ptr.next = ListNode(number)
+        ptr = ptr.next
+
+    ptr = dummyRoot.next
+    return ptr
+
+
+def listNodeToString(node):
+    if not node:
+        return "[]"
+
+    result = ""
+    while node:
+        result += str(node.val) + ", "
+        node = node.next
+    return "[" + result[:-2] + "]"
+
+# 最长公共子串
+def getLCS1(str1, str2):
+    m = len(str1)
+    n = len(str2)
+    dp = [[0] * n for _ in range(m)]
+    ret = 0
+    for i in range(m):
+        dp[i][0] = 1 if str1[i] == str2[0] else 0
+    for j in range(n):
+        dp[0][j] = 1 if str1[0] == str2[j] else 0
+    for i in range(1, m):
+        for j in range(1, n):
+            if str1[i] == str2[j]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            ret = max(ret, dp[i][j])
+    return ret
+
+# 最长公共子序列
+def getLCS2(str1, str2):
+    m = len(str1)
+    n = len(str2)
+    dp = [[0] * n for _ in range(m)]
+    for i in range(1, m):
+        for j in range(1, n):
+            if str1[i] == str2[j]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[-1][-1]
+
+def print_array(arr):
+    for i in range(len(arr)):
+        print(arr[i])

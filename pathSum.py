@@ -1,4 +1,4 @@
-from utils.tools import treeNodeToString, TreeNode, stringToTreeNode
+from utils.tools import *
 
 
 class Solution(object):
