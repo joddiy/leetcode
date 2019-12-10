@@ -1,10 +1,54 @@
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+from utils.tools import *
+import sys
 
 class Solution:
-    def maxPathSum(self, root: TreeNode) -> int:
-        
+    def maxPathSum(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        # greedy search is ok for non-negative values
+        def recursive(root):
+            if root:
+                left_max_0, right_max_0, max_path_0 = recursive(
+                    root.left)
+                left_max_1, right_max_1, max_path_1 = recursive(
+                    root.right)
+                left_max = max(left_max_0, right_max_0)
+                right_max = max(left_max_1, right_max_1)
+                return left_max + root.val, right_max + root.val, left_max + right_max + root.val
+            else:
+                return 0, 0, 0
+        _, _, res = recursive(root)
+        return res
+
+    def maxPathSum(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root.left is None and root.right is None:
+            return root.val
+        self.res = -sys.maxsize
+        # ok for non-negative values
+
+        def recursive(root):
+            if root:
+                left_max_0, right_max_0 = recursive(
+                    root.left)
+                left_max_1, right_max_1 = recursive(
+                    root.right)
+                left_max = max(left_max_0, right_max_0, 0)
+                right_max = max(left_max_1, right_max_1, 0)
+                self.res = max(self.res, left_max + right_max + root.val)
+                return left_max + root.val, right_max + root.val
+            else:
+                return 0, 0
+        recursive(root)
+        return self.res
+
+
+print(Solution().maxPathSum(stringToTreeNode('[1,2,3]')))
+print(Solution().maxPathSum(stringToTreeNode('[-10,9,20,null,null,15,7]')))
+print(Solution().maxPathSum(stringToTreeNode('[-3]')))
+print(Solution().maxPathSum(stringToTreeNode('[2,-1]')))
