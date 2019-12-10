@@ -1,4 +1,6 @@
 class Solution(object):
+
+    # dp O(n^2)
     def longestPalindrome(self, s):
         """
         :type s: str
@@ -12,21 +14,23 @@ class Solution(object):
         ret_pos = set()
         for i in range(m):
             if i + 1 < m:
-                dp[i][i+1] = 2 if s[i] == s[i+1] else 0
-            dp[i][i] = 1
-        for i in range(m):
-            for j in range(m):
+                dp[i][i+1] = 2 if s[i] == s[i+1] else 0  # even
+            dp[i][i] = 1  # odd
+        for i in range(m):  # i is the length of the slide window
+            for j in range(m):  # j is the start point of slide window
                 if j + i >= m:
                     break
-                if i == 0:
+                if i == 0:  # for the length of window is zero
                     dp[j][j+i] = 1
+                # for each slide windor, grow from the sub-problem
                 elif dp[j+1][j+i-1] > 0 and s[j] == s[j+i]:
                     dp[j][j+i] = dp[j+1][j+i-1] + 2
-                if dp[j][j+i] > ret:
+                if dp[j][j+i] > ret:  # update the max length
                     ret = dp[j][j+i]
                     ret_pos = (j, j+i)
         return s[ret_pos[0]:ret_pos[1]+1]
-
+ 
+    # O(n^2)
     def longestPalindrome(self, s):
         """
         :type s: str
@@ -47,4 +51,4 @@ class Solution(object):
         return s[start:start+maxlength]
 
 
-Solution().longestPalindrome("ababbaba")
+print(Solution().longestPalindrome("ababbaba"))
