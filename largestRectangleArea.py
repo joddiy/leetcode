@@ -16,64 +16,55 @@ class Solution(object):
             max_area = max(max_area, (k-j-1) * heights[i])
         return max_area
 
-    # corrent idea but cannot run
+    # we don't need to rescan each item to the left
+    # we can reuse results of previous calculations and "jump" through indices in quick manner:
     def largestRectangleArea(self, heights):
         """
         :type heights: List[int]
         :rtype: int
         """
-        heights = [0]+heights+[0]
-        n = len(heights)
-        left_min = [0] * n
         max_area = 0
-        k = 0
+        n = len(heights)
+        if n == 0:
+            return 0
+        left_min, right_min = [0] * n, [0] * n
+        left_min[0] = -1
+        right_min[n-1] = n
         for i in range(1, n):
-            if heights[i] > heights[i-1]:
-                left_min[i] = i
-            elif heights[i] < heights[i-1]:
-                left_min[i] = i-k
-                k = -1
-            else:
-                left_min[i] = left_min[i-1]
-            k += 1
-        print(left_min)
-        right_min = [n-1] * n
-        k = 0
+            j = i-1
+            while j >= 0 and heights[j] >= heights[i]:
+                j = left_min[j]
+            left_min[i] = j
         for i in range(n-2, -1, -1):
-            if heights[i] > heights[i+1]:
-                right_min[i] = i
-            elif heights[i] < heights[i+1]:
-                right_min[i] = i+k-1
-                k = -1
-            else:
-                right_min[i] = right_min[i+1]
-            k += 1
-        print(right_min)
+            k = i+1
+            while k < n and heights[k] >= heights[i]:
+                k = right_min[k]
+            right_min[i] = k
         for i in range(n):
             max_area = max(max_area, heights[i]
-                           * (right_min[n-1-i]-left_min[i]))
+                           * (right_min[i] - left_min[i]-1))
         return max_area
 
-    #
-    # def largestRectangleArea(self, heights):
-    #     """
-    #     :type heights: List[int]
-    #     :rtype: int
-    #     """
-    #     heights.append(0)
-    #     stack = [-1]
-    #     ans = 0
-    #     for i in range(len(heights)):
-    #         while heights[i] < heights[stack[-1]]:
-    #             h = heights[stack.pop()]
-    #             w = i - stack[-1] - 1
-    #             ans = max(ans, h * w)
-    #         stack.append(i)
-    #     heights.pop()
-    #     return ans
+    # still has queestion about the right boundary
+    def largestRectangleArea(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        heights.append(0) # height[-1] = 0
+        stack = [-1]
+        ans = 0
+        for i in range(len(heights)):
+            while heights[i] < heights[stack[-1]]:
+                h = heights[stack.pop()]  # pop the values which are larger than current value
+                w = i - stack[-1] - 1
+                ans = max(ans, h * w)
+            stack.append(i) # , but push this value into the stack, because values, 
+        heights.pop()
+        return ans
 
 
 print(Solution().largestRectangleArea([2, 1, 5, 6, 2, 3]))
-# print(Solution().largestRectangleArea([2]))
-# print(Solution().largestRectangleArea([]))
+print(Solution().largestRectangleArea([2]))
+print(Solution().largestRectangleArea([]))
 print(Solution().largestRectangleArea([2, 3]))
