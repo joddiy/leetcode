@@ -4,6 +4,7 @@
 # time: 2018/11/20 2:32 PM
 # ------------------------------------------------------------------------
 
+
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
         """
@@ -38,7 +39,8 @@ class Solution(object):
         window_map = {}
         while j < len(s):
             if s[j] in window_map:
-                i = max(window_map[s[j]], i)  # very important
+                # very important, because we don't remove useless values when we move i
+                i = max(window_map[s[j]], i)
             max_length = max(max_length, j - i + 1)
             window_map[s[j]] = j + 1
             j += 1
