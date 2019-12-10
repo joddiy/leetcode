@@ -5,10 +5,7 @@
 # ------------------------------------------------------------------------
 
 # Definition for singly-linked list.
-class ListNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.next = None
+from utils.tools import ListNode, stringToListNode, listNodeToString
 
 
 class Solution(object):
@@ -18,40 +15,39 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        res = ListNode(0)
-        current_node = res
+        head = ListNode(None)
+        cur = head
         carry = 0
-        tmp_l1 = l1
-        tmp_l2 = l2
-        # init
-        if tmp_l1 is not None:
-            current_node.val += tmp_l1.val
-            tmp_l1 = tmp_l1.next
-        if tmp_l2 is not None:
-            current_node.val += tmp_l2.val
-            tmp_l2 = tmp_l2.next
-        if current_node.val >= 10:
-            current_node.val -= 10
-            carry = 1
-        else:
-            carry = 0
-        # next
-        while tmp_l1 is not None or tmp_l2 is not None or carry != 0:
-            current_node.next = ListNode(0)
-            current_node = current_node.next
-            if tmp_l1 is not None:
-                current_node.val += tmp_l1.val
-                tmp_l1 = tmp_l1.next
-            if tmp_l2 is not None:
-                current_node.val += tmp_l2.val
-                tmp_l2 = tmp_l2.next
-            current_node.val += carry
-            if current_node.val >= 10:
-                current_node.val -= 10
-                carry = 1
-            else:
-                carry = 0
-        return res
+        while l1 or l2 or carry != 0:
+            x1 = l1.val if l1 else 0
+            x2 = l2.val if l2 else 0
+            y = x1 + x2 + carry
+            carry = y//10
+            y = y % 10
+            cur.next = ListNode(y)
+            cur = cur.next
+            l1 = l1.next if l1 else l1
+            l2 = l2.next if l2 else l2
+        return head.next
+
+    def addTwoNumbers(self, l1, l2):
+        head = ListNode(None)
+        temp = head
+        carry = 0
+        while l1 or l2 or carry:
+            if l1:
+                carry += l1.val
+                l1 = l1.next
+            if l2:
+                carry += l2.val
+                l2 = l2.next
+            temp.next = ListNode(carry % 10)
+            temp = temp.next
+            carry //= 10
+        return head.next
 
 
-print(Solution().addTwoNumbers([2, 4, 3], [5, 6, 4]))
+print(listNodeToString(Solution().addTwoNumbers(stringToListNode(
+    "[2,4,3]"), stringToListNode("[5,6,4]"))))
+print(listNodeToString(Solution().addTwoNumbers(stringToListNode(
+    "[5]"), stringToListNode("[5]"))))
