@@ -12,11 +12,13 @@ class Solution(object):
             else:
                 stack.pop()
                 if len(stack) == 0:
-                    stack.append(i)
+                    stack.append(i) # last invalid point
                 else:
-                    max_ret = max(max_ret, i - stack[-1])
+                    max_ret = max(max_ret, i - stack[-1]) # i-stack[-1] is current valid length
         return max_ret
 
 
-
-Solution().longestValidParentheses(")()())")
+# print(Solution().longestValidParentheses(")()())"))
+# print(Solution().longestValidParentheses("(()"))
+# print(Solution().longestValidParentheses("()(()"))
+print(Solution().longestValidParentheses(")()())"))
