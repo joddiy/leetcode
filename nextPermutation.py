@@ -13,25 +13,5 @@ class Solution(object):
                 j -= 1
             nums[i], nums[j] = nums[j], nums[i]
         nums[i+1:] = nums[:i:-1]
-        print(nums)
-
-    class Solution(object):
-        def nextPermutation(self, num):
-            k, l = -1, 0
-            for i in range(len(num) - 1):
-                if num[i] < num[i + 1]:
-                    k = i
-
-            if k == -1:
-                num.reverse()
-                return
-
-            for i in range(k + 1, len(num)):
-                if num[i] > num[k]:
-                    l = i
-
-            num[k], num[l] = num[l], num[k]
-            num[k + 1:] = num[:k:-1]
-
 
 Solution().nextPermutation([1, 3, 2])
