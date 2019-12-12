@@ -16,16 +16,19 @@ class Solution(object):
             m = (s+e)//2
             if nums[m] == target:
                 return m
+            # target locates at non-axis side (and is left side)
             if nums[s] <= target < nums[m]:
                 return recursion(s, m-1)
+            # target locates at non-axis side (and is right side)
             elif nums[m] < target <= nums[e]:
                 return recursion(m+1, e)
+            # target locates at axis side (and is right side)
             elif nums[m] > nums[e]:
                 return recursion(m+1, e)
-            else:
+            else:  # target locates at axis side (and is left side)
                 return recursion(s, m-1)
 
         return recursion(start, end)
 
 
-Solution().search([4, 5, 6, 7, 0, 1, 2], 0)
+print(Solution().search([4, 5, 6, 7, 0, 1, 2], 0))
