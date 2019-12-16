@@ -1,4 +1,5 @@
 class Solution(object):
+    # O(n^2)
     def firstMissingPositive(self, nums):
         """
         :type nums: List[int]
@@ -15,6 +16,7 @@ class Solution(object):
                 return j
         return j
 
+    # O(n)
     def firstMissingPositive(self, nums):
         """
         :type nums: List[int]
@@ -34,4 +36,4 @@ class Solution(object):
         return n
 
 
-print(Solution().firstMissingPositive([]))
+print(Solution().firstMissingPositive([1,2,0]))

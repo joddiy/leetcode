@@ -1,4 +1,5 @@
 class Solution(object):
+    # O(n)
     def trap(self, height):
         """
         :type height: List[int]
@@ -19,5 +20,4 @@ class Solution(object):
         return ret
 
 
-
-Solution().trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1])
+print(Solution().trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))

@@ -28,4 +28,4 @@ class Solution(object):
         return ret
 
 
-Solution().maxSubArray([-1,1])
+print(Solution().maxSubArray([-1, 1]))

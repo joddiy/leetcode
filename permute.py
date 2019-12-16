@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-# file: permute.py
-# author: joddiyzhang@gmail.com
-# time: 2018/11/26 10:45 AM
-# ------------------------------------------------------------------------
-
 class Solution(object):
     def permute(self, nums):
         """
@@ -20,4 +14,5 @@ class Solution(object):
         recursive(nums, [], res)
         return res
 
-Solution().permute([1,2,3,4,5])
+
+print(Solution().permute([1, 2, 3, 4, 5]))

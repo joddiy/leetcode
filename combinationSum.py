@@ -24,4 +24,4 @@ class Solution(object):
         return ret
 
 
-Solution().combinationSum([8,7,4,3], 11)
+print(Solution().combinationSum([8, 7, 4, 3], 11))
