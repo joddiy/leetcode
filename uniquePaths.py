@@ -31,4 +31,4 @@ class Solution(object):
         return (matrix[m-1][n-1])
 
 
-Solution().uniquePaths(10, 10)
+print(Solution().uniquePaths(10, 10))

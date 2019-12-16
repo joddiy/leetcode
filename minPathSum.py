@@ -14,8 +14,8 @@ class Solution(object):
         return (grid[-1][-1])
 
 
-Solution().minPathSum([
+print(Solution().minPathSum([
     [1, 3, 1],
     [1, 5, 1],
     [4, 2, 1]
-])
+]))

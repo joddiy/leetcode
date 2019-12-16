@@ -1,4 +1,5 @@
 class Solution(object):
+    # O(n)
     def canJump(self, nums):
         """
         :type nums: List[int]
@@ -11,4 +12,5 @@ class Solution(object):
             m = max(m, i+nums[i])
         return True
 
-Solution().canJump([1, 2])
+
+print(Solution().canJump([1, 2]))
