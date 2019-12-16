@@ -18,4 +18,4 @@ class Solution(object):
         return nums
 
 
-Solution().sortColors([1, 0, 2])
+print(Solution().sortColors([1, 0, 2]))

@@ -9,37 +9,27 @@ class Solution(object):
         :type t: str
         :rtype: str
         """
-        m = collections.defaultdict(int)  # count the chars in t
+        m = collections.defaultdict(int)
         for c in t:
             m[c] += 1
-        print(m)
-
         j = 0
 
+        # identify how many remaining chars in T we still need to find
         count = len(t)
         minLen = sys.maxsize
         minStart = 0
-
         for i in range(len(s)):
+            # only when m[s[i]] > 0, means remaining chars in t
             if m[s[i]] > 0:
                 count -= 1
-
             m[s[i]] -= 1
-            print(m,count)
-
-            # if count = 0, we start to constract the left point
+            # no more chars in T, we start to move j
             while count == 0:
                 if (i - j + 1) < minLen:
                     minLen = i-j+1
-                    # DONT FORGET THE MIN START IF YOU NEED TO RETURN THE STRING
                     minStart = j
                 m[s[j]] += 1
-                # DONT FORGET TO CHECK THE > 0
-                # once the count is changed, break the loop and find next
-                # right point
-                # for the char not in the t,
-                # the value cannot be large than 0
-                # so it won't influence the count
+                # only when m[s[i]] > 0, means not chars in S, instad in T again.
                 if m[s[j]] > 0:
                     count += 1
                 j += 1
