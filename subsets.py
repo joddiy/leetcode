@@ -4,6 +4,7 @@
 # time: 2018/11/26 11:02 AM
 # ------------------------------------------------------------------------
 
+
 class Solution(object):
     def subsets(self, nums):
         """
@@ -19,3 +20,6 @@ class Solution(object):
         res = []
         recursive(sorted(nums), 0, [], res)
         return res
+
+
+print(Solution().subsets([1, 2, 3]))
