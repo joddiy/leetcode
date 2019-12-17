@@ -1,9 +1,4 @@
-# Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+from utils.tools import *
 
 
 class Solution:
@@ -44,3 +39,36 @@ class Solution:
                 n.right = n.left
                 n.left = None
             n = n.right
+
+    def flatten(self, root):
+        """
+        :type root: TreeNode
+        :rtype: void Do not return anything, modify root in-place instead.
+        """
+        if root is None:
+            return root
+
+        stack = []
+        if root.right:
+            stack.append(root.right)
+        if root.left:
+            stack.append(root.left)
+        root.left = None
+        head = root
+        current = root
+        while stack:
+            node = stack.pop()
+            print(stack)
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+
+            node.left = None
+            current.right = node
+            current = node
+
+
+root = stringToTreeNode("[1,2,5,3,4,6]")
+Solution().flatten(root)
+print(treeNodeToString(root))

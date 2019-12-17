@@ -2,6 +2,8 @@ from utils.tools import TreeNode, stringToTreeNode
 
 
 class Solution(object):
+    # compare from down to up, which must larger than max value of left subtree
+    # and less than min value of right subtree
     def isValidBST(self, root):
         """
         :type root: TreeNode
@@ -32,26 +34,24 @@ class Solution(object):
         else:
             return recursive(root, None, None)
 
-
-class Solution(object):
+    # compare from up to down, we set a range by low bound and upper bound,
+    # each time we enter a left tree, we constrict the upper bound,
+    # and when we enter the right tree, we constrict the right bound
     def isValidBST(self, root):
         """
         :type root: TreeNode
         :rtype: bool
         """
+        def _dfs(node, lower_bound, upper_bound):
+            if not node:
+                return True
+            if node.val <= lower_bound:
+                return False
+            if node.val >= upper_bound:
+                return False
+            return _dfs(node.left, lower_bound, node.val) and _dfs(node.right, node.val, upper_bound)
+
         return self._dfs(root, float("-inf"), float("inf"))
-
-    def _dfs(self, node, left_val, right_val):
-        if not node:
-            return True
-
-        if node.val <= left_val:
-            return False
-
-        if node.val >= right_val:
-            return False
-
-        return self._dfs(node.left, left_val, node.val) and self._dfs(node.right, node.val, right_val)
 
 
 # print(Solution().isValidBST(stringToTreeNode('[5,1,4,null,null,3,6]')))

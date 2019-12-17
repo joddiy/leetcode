@@ -12,4 +12,4 @@ class Solution(object):
         return dp[-1]
 
 
-Solution().numTrees(3)
+print(Solution().numTrees(3))

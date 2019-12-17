@@ -1,15 +1,4 @@
-# -*- coding: utf-8 -*-
-# file: inorderTraversal.py
-# author: joddiyzhang@gmail.com
-# time: 2018/11/22 9:59 PM
-# ------------------------------------------------------------------------
-
-# Definition for a binary tree node.
-class TreeNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+from utils.tools import TreeNode, stringToTreeNode, treeNodeToString
 
 
 class Solution(object):
@@ -31,3 +20,6 @@ class Solution(object):
                 p = p.right  # take one right node
                 # when right is None, will pop a new node at next iteration
         return output
+
+
+print(Solution().inorderTraversal(stringToTreeNode("[1,null,2,3]")))

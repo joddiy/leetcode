@@ -1,4 +1,6 @@
 class Solution(object):
+    
+    # O(n^2)
     # Time Limit Exceeded
     def largestRectangleArea(self, heights):
         """
@@ -16,6 +18,7 @@ class Solution(object):
             max_area = max(max_area, (k-j-1) * heights[i])
         return max_area
 
+    # O(n)
     # we don't need to rescan each item to the left
     # we can reuse results of previous calculations and "jump" through indices in quick manner:
     def largestRectangleArea(self, heights):
