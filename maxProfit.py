@@ -50,5 +50,4 @@ class Solution(object):
         return rst
 
 
-Solution().maxProfit([1, 2])
-# Solution().maxProfit([7, 6, 4, 3, 1])
+print(Solution().maxProfit([7, 6, 4, 3, 1]))

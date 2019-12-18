@@ -1,11 +1,12 @@
-# Definition for a Node.
+import collections
+
+
 class Node(object):
     def __init__(self, val, next, random):
         self.val = val
         self.next = next
         self.random = random
 
-import collections
 
 class Solution(object):
     def copyRandomList(self, head):

@@ -1,15 +1,4 @@
-# -*- coding: utf-8 -*-
-# file: isSymmetric.py
-# author: joddiyzhang@gmail.com
-# time: 2018/11/21 2:44 PM
-# ------------------------------------------------------------------------
-
-# Definition for a binary tree node.
-class TreeNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+from utils.tools import *
 
 
 class Solution(object):
@@ -50,3 +39,6 @@ class Solution(object):
             return (t1.val == t2.val) and isMirror(t1.right, t2.left) and isMirror(t1.left, t2.right)
 
         return isMirror(root, root)
+
+
+print(Solution().isSymmetric(stringToTreeNode("[1,2,2,3,4,4,3]")))

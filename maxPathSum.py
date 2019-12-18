@@ -1,6 +1,7 @@
 from utils.tools import *
 import sys
 
+
 class Solution:
     def maxPathSum(self, root):
         """
@@ -30,20 +31,15 @@ class Solution:
         if root.left is None and root.right is None:
             return root.val
         self.res = -sys.maxsize
-        # ok for non-negative values
 
         def recursive(root):
             if root:
-                left_max_0, right_max_0 = recursive(
-                    root.left)
-                left_max_1, right_max_1 = recursive(
-                    root.right)
-                left_max = max(left_max_0, right_max_0, 0)
-                right_max = max(left_max_1, right_max_1, 0)
+                left_max = recursive(root.left)
+                right_max = recursive(root.right)
                 self.res = max(self.res, left_max + right_max + root.val)
-                return left_max + root.val, right_max + root.val
+                return max(left_max + root.val, right_max + root.val, 0)
             else:
-                return 0, 0
+                return 0
         recursive(root)
         return self.res
 

@@ -1,9 +1,4 @@
-# Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+from utils.tools import *
 
 
 class Solution:
@@ -12,34 +7,7 @@ class Solution:
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-        queue = [root]
-        output = []
-        tmp = []
-        cur_cnt = 1
-        next_cnt = 0
-        while queue:
-            node = queue.pop(0)
-            if node:
-                cur_cnt -= 1
-                tmp.append(node.val)
-                if node.left:
-                    next_cnt += 1
-                if node.right:
-                    next_cnt += 1
-                if cur_cnt == 0:
-                    cur_cnt = next_cnt
-                    next_cnt = 0
-                    output.append(tmp)
-                    tmp = []
-                queue.extend([node.left, node.right])
-        return output
-
-    def levelOrder(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[List[int]]
-        """
-
+        # pre-order dfs
         def traverse(node, level):
             if node:
                 if len(res) <= level:
@@ -67,3 +35,6 @@ class Solution:
                 output[level].append(node.val)
                 queue.extend([(node.left, level + 1), (node.right, level + 1)])
         return output
+
+
+print(Solution().levelOrder(stringToTreeNode("[3,9,20,null,null,15,7]")))
