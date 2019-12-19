@@ -8,7 +8,6 @@ class Solution(object):
         :rtype: ListNode
         """
         bla, _ = self.sort(head)
-        print(listNodeToString(bla))
         return bla
 
     def sort(self, head):
@@ -57,4 +56,4 @@ class Solution(object):
             return left_head, right_tail
 
 
-Solution().sortList(stringToListNode("[-1,0,5,3,4]"))
+print(listNodeToString(Solution().sortList(stringToListNode("[-1,0,5,3,4]"))))

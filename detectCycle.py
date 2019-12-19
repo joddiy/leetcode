@@ -29,4 +29,4 @@ class Solution(object):
 
 head = stringToListNode("[3,2,0,-4]")
 head.next.next.next.next = head.next
-Solution().detectCycle(head).val
+print(Solution().detectCycle(head).val)

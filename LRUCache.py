@@ -5,6 +5,7 @@ class Node:
         self.prev = None
         self.next = None
 
+
 class LRUCache:
     def __init__(self, capacity):
         self.capacity = capacity
@@ -45,6 +46,7 @@ class LRUCache:
         self.tail.prev = node
         node.prev = p
         node.next = self.tail
+
 
 cache = LRUCache(2)
 
