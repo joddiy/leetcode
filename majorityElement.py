@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-# file: majorityElement.py
-# author: joddiyzhang@gmail.com
-# time: 2018/11/20 8:51 PM
-# ------------------------------------------------------------------------
-
 class Solution(object):
     def majorityElement(self, nums):
         """
