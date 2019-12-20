@@ -34,7 +34,6 @@ class Solution(object):
             else:
                 i += 1
                 result.append(max(nums[i:i+k]))
-            print(result)
 
         return result
 

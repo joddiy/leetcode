@@ -46,7 +46,6 @@ class MedianFinder(object):
                 self.output.append(num)
             else:
                 j = binary_search(self.output, num, 0, len(self.output)-1)
-                print(j)
                 self.output = self.output[0:j] + [num] + self.output[j:]
             print(self.output)
 
@@ -119,10 +118,13 @@ class MedianFinder(object):
 
 # Your MedianFinder object will be instantiated and called as such:
 obj = MedianFinder()
-obj.addNum(-1)
-obj.addNum(-2)
+obj.addNum(1)
+print(obj.small, obj.large)
+obj.addNum(2)
+print(obj.small, obj.large)
 param_2 = obj.findMedian()
 print(param_2)
 obj.addNum(5)
+print(obj.small, obj.large)
 param_3 = obj.findMedian()
 print(param_3)
