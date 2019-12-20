@@ -1,14 +1,4 @@
-# -*- coding: utf-8 -*-
-# file: reverseList.py
-# author: joddiyzhang@gmail.com
-# time: 2018/11/20 8:01 PM
-# ------------------------------------------------------------------------
-
-# Definition for singly-linked list.
-class ListNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.next = None
+from utils.tools import *
 
 
 class Solution(object):
@@ -41,3 +31,26 @@ class Solution(object):
             cur = next_p
 
         return prev
+
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        def recursive(head):
+            if head.next:
+                new_head, tail = recursive(head.next)
+                tail.next = head
+                return new_head, head
+            else:
+                return head, head
+
+        if not head or not head.next:
+            return head
+        new_head, tail = recursive(head)
+        tail.next = None
+        return new_head
+
+
+print(listNodeToString(Solution().reverseList(
+    stringToListNode("[1,2,3,4,5]"))))

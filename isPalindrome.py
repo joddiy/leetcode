@@ -15,7 +15,7 @@ class Solution(object):
             slow.next = rev
             rev = slow
             slow = t_slow
-        if fast: #odd
+        if fast:  # odd
             slow = slow.next
         while rev and rev.val == slow.val:
             rev = rev.next
@@ -23,4 +23,4 @@ class Solution(object):
         return not rev
 
 
-Solution().isPalindrome(stringToListNode("[1,2,2,1]"))
+print(Solution().isPalindrome(stringToListNode("[1,2,2,1]")))

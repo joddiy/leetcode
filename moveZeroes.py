@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-# file: moveZeroes.py
-# author: joddiyzhang@gmail.com
-# time: 2018/11/20 7:36 PM
-# ------------------------------------------------------------------------
-
 class Solution(object):
     def moveZeroes(self, nums):
         """
@@ -12,7 +6,6 @@ class Solution(object):
         """
         num_of_zero = 0
         for i in range(len(nums)):
-
             if nums[i] == 0:
                 num_of_zero += 1
             else:
@@ -31,4 +24,6 @@ class Solution(object):
                 zero += 1  # only when replace, add one, this zero records the first zero
 
 
-print(Solution().moveZeroes([0, 1, 0, 3, 12]))
+nums = [0, 1, 0, 3, 12]
+Solution().moveZeroes(nums)
+print(nums)

@@ -2,7 +2,8 @@ class TrieNode(object):
     def __init__(self, x):
         self.val = x
         self.dict = [None] * 26
-        
+
+
 class Trie(object):
     def __init__(self):
         """
@@ -56,8 +57,8 @@ class Trie(object):
 # Your Trie object will be instantiated and called as such:
 trie = Trie()
 trie.insert("apple")
-trie.search("apple")
-trie.search("app")
-trie.startsWith("app")
-trie.insert("app") 
-trie.search("app")
+print(trie.search("apple"))
+print(trie.search("app"))
+print(trie.startsWith("app"))
+trie.insert("app")
+print(trie.search("app"))

@@ -1,4 +1,5 @@
 import math
+import sys
 
 
 class Solution(object):
@@ -12,7 +13,7 @@ class Solution(object):
         dp[0] = 0
         dp[1] = 1
         for i in range(2, n+1):
-            least_num = 10e10
+            least_num = sys.maxsize
             for j in range(len(nums)):
                 if i - nums[j] < 0:
                     break
@@ -20,4 +21,5 @@ class Solution(object):
             dp[i] = least_num + 1
         return dp[-1]
 
-Solution().numSquares(4)
+
+print(Solution().numSquares(12))
