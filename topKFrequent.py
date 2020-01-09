@@ -18,4 +18,4 @@ class Solution(object):
         return [key for value, key in largest]
 
 
-Solution().topKFrequent([1, 1, 1, 2, 2, 3], 2)
+print(Solution().topKFrequent([1, 1, 1, 2, 2, 3], 2))

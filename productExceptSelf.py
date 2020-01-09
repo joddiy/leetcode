@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-# file: productExceptSelf.py
-# author: joddiyzhang@gmail.com
-# time: 2018/11/22 8:41 PM
-# ------------------------------------------------------------------------
-
 class Solution(object):
     def productExceptSelf(self, nums):
         """
