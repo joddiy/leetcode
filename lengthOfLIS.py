@@ -1,3 +1,6 @@
+import sys
+
+
 class Solution(object):
     def lengthOfLIS(self, nums):
         """
@@ -12,7 +15,7 @@ class Solution(object):
                 taken = 1 + recrsion(nums, nums[cupos], cupos+1)
             nottaken = recrsion(nums, prev, cupos + 1)
             return max(taken, nottaken)
-        return recrsion(nums, -999999, 0)
+        return recrsion(nums, -sys.maxsize, 0)
 
     def lengthOfLIS(self, nums):
         """
@@ -34,6 +37,7 @@ class Solution(object):
             return memo[prev+1][cupos]
         return recrsion(-1, 0)
 
+    # O(n^2)
     def lengthOfLIS(self, nums):
         """
         :type nums: List[int]
@@ -51,6 +55,9 @@ class Solution(object):
             dp[i] = max_t + 1
         return max(dp)
 
+    # O(nlogn)
+    # the final dp is not the longest increasing subsequence, 
+    # but length of dp array results in length of Longest Increasing Subsequence.
     def lengthOfLIS(self, nums):
         """
         :type nums: List[int]
@@ -60,15 +67,15 @@ class Solution(object):
         size = 0
         for n in nums:
             i, j = 0, size
-            while i!=j:
+            while i != j:
                 m = (i+j)//2
-                if tails[m]<n:
+                if tails[m] < n:
                     i = m + 1
                 else:
                     j = m
-            tails[i] = n
-            size = max(size, i+1)
+            tails[i] = n # replace first value which is larger than n
+            size = max(size, i+1) #
         return size
 
 
-Solution().lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18])
+print(Solution().lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]))
