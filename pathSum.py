@@ -10,14 +10,17 @@ class Solution(object):
         """
         def recursive(root, target, currPathSum, cache):
             if root:
+                # calculate currPathSum and required oldPathSum
                 currPathSum += root.val
                 oldPathsum = currPathSum - target
+                # update result and cache
                 self.result += cache.get(oldPathsum, 0)
                 cache[currPathSum] = cache.get(currPathSum, 0) + 1
 
-                print(root.val, currPathSum, oldPathsum, self.result, cache)
+                # dfs breakdown
                 recursive(root.left, target, currPathSum, cache)
                 recursive(root.right, target, currPathSum, cache)
+                # when move to a different branch, the currPathSum is no longer available, hence remove one. 
                 cache[currPathSum] -= 1
 
         self.result = 0
@@ -26,4 +29,5 @@ class Solution(object):
         return self.result
 
 
-print(Solution().pathSum(stringToTreeNode("[10,5,-3,3,2,null,11,3,-2,null,1]"), 8))
+print(Solution().pathSum(stringToTreeNode(
+    "[10,5,-3,3,2,null,11,3,-2,null,1]"), 8))

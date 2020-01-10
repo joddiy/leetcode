@@ -42,6 +42,7 @@ class Solution(object):
         result = []
         for p in people:
             result.insert(p[1], p)
+            print(result)
         return result
 
 
