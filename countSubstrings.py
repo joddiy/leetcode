@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-# file: countSubstrings.py
-# author: joddiyzhang@gmail.com
-# time: 2018/11/22 9:08 PM
-# ------------------------------------------------------------------------
-
 class Solution(object):
 
     def countSubstrings(self, s):
@@ -16,7 +10,6 @@ class Solution(object):
 
         def extendPalindrome(s, left, right):
             while left >= 0 and right < len(s) and s[left] == s[right]:
-                print(s[left:right+1])
                 self.count += 1
                 left -= 1
                 right += 1
