@@ -20,7 +20,6 @@ class Solution(object):
                 del sCounter[s[i-len(p)+1]]
         return res
 
-    #
     def findAnagrams(self, s, p):
         """
         :type s: str
