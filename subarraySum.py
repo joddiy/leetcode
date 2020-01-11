@@ -1,24 +1,25 @@
 class Solution(object):
+    # O(n^2) time limit exceeded
     def subarraySum(self, nums, k):
         """
         :type nums: List[int]
         :type k: int
         :rtype: int
         """
-        s = sum(nums)
-        n, m = len(nums), 2 * k + 1
-
-        dp = [[0, 0] * m for _ in range(n + 1)]
-        dp[0][nums[0]] = 1
-
+        count = 0
+        n = len(nums)
         for i in range(n):
-            for j in range(nums[i], m - nums[i]):
-                if dp[i][j]:
-                    dp[i + 1][j - nums[i]] += dp[i][j]
-                    dp[i + 1][j] += dp[i][j]
+            sum = 0
+            for j in range(i, n):
+                sum += nums[j]
+                if sum == k:
+                    count += 1
+        return count
 
-        return dp[-1][s + k]
-        
+    # O(n), any sum of substring can be got by sum[i, j] = sum[0, j] - sum[0, i]
+    # so we just calculate sum[0, i] for i in range(n)
+    # each time when we have a sum[0, j], we check whether we have a sum[0, i] already to make sum[i, j] == target, 
+    # that is sum[0, i] = sum[0, j] - target, we only need a hash table to store all sum[0, i] to find it. 
     def subarraySum(self, nums, k):
         """
         :type nums: List[int]
@@ -39,4 +40,8 @@ class Solution(object):
                 hash_map[curr_sum] = 1
         return ret
 
-print(Solution().subarraySum([1, 1, 1], 2))
+
+# print(Solution().subarraySum([1, 1, 1], 2))
+print(Solution().subarraySum([1, 2, 3], 3))
+print(Solution().subarraySum([1], 1))
+print(Solution().subarraySum([1], 0))
