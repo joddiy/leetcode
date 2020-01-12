@@ -92,4 +92,4 @@ class Solution(object):
         return max(m, (mx-1)*(n+1)+25-i)
 
 
-Solution().leastInterval(["A", "A", "A", "B", "B", "B"], 2)
+print(Solution().leastInterval(["A", "A", "A", "B", "B", "B"], 2))

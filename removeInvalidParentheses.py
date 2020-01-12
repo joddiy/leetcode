@@ -18,14 +18,14 @@ class Solution(object):
                         print("positive")
                     elif openParen == ')':
                         print('negative')
-                    print("i=",i, numOpenParen, numClosedParen)
+                    print("i=", i, numOpenParen, numClosedParen)
                     # Try removing this ONE closed paren at each position, skipping duplicates
                     print(jStart, i)
                     # jStart: always to search the first closedParen which can be removed
-                    for j in range(jStart, i+1): # <=
-                        # can be the first char, 
+                    for j in range(jStart, i+1):  # <=
+                        # can be the first char,
                         # or the char which previous char isn't closedParen, removing each one of the consequtive closedParen actually is the same
-                        if s[j] == closedParen and (j == jStart or s[j-1] != closedParen):
+                        if s[j] == closedParen and (j == jStart or s[j-1] != closedParen): # since when j == jStart, there isn't j-1
                             # Recursion: iStart = i since we now have valid # closed parenthesis thru i. jStart = j prevents duplicates
                             # at the next recursion, we only need to search the iStart from the current i, and search the jStart from the current j
                             # since we found the first invalid closedParen at the i, and we have removed a closedParen at j
