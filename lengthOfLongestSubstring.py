@@ -6,6 +6,7 @@
 
 
 class Solution(object):
+    # O(2n)
     def lengthOfLongestSubstring(self, s):
         """
         :type s: str
@@ -28,7 +29,8 @@ class Solution(object):
             window_map[s[i]] = 1
             max_length = max(max_length, len(window_list))
         return max_length
-
+    
+    # O(n)
     def lengthOfLongestSubstring(self, s):
         """
         :type s: str
