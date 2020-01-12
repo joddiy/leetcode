@@ -57,14 +57,14 @@ class Solution(object):
         imin, imax, half_len = 0, m, (m+n+1)//2
         while imin <= imax:
             # each loop, take the mid value as i
-            i = (imin+imax)//2
+            i = (imin+imax)//2 # binary search
             j = half_len - i
             if i < m and nums2[j-1] > nums1[i]:
                 # i is too small, must increase it
-                imin += 1
+                imin = i + 1  # binary search
             elif i > 0 and nums1[i-1] > nums2[j]:
-                # j is too big, must decrease it
-                imax -= 1
+                # i is too big, must decrease it
+                imax = i - 1  # binary search
             else:
                 # i is perfect, find the max value of left
                 if i == 0:

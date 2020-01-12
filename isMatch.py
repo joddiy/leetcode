@@ -100,7 +100,7 @@ class Solution(object):
                 if p[i - 1] != "*":
                     # Update the table by referring the diagonal element.
                     table[i][j] = table[i - 1][j - 1] and \
-                                  (p[i - 1] == s[j - 1] or p[i - 1] == '.')
+                        (p[i - 1] == s[j - 1] or p[i - 1] == '.')
                 else:
                     # Eliminations (referring to the vertical element)
                     # Either refer to the one before previous or the previous.
@@ -116,11 +116,60 @@ class Solution(object):
                         table[i][j] |= table[i][j - 1]
 
         return table[-1][-1]
+    
+    # O((T+P)^(T+P/2))
+    def isMatch(self, text, pattern):
+        if not pattern:
+            return not text
+
+        first_match = bool(text) and pattern[0] in {text[0], '.'}
+
+        if len(pattern) >= 2 and pattern[1] == '*':
+            return (self.isMatch(text, pattern[2:])  # match empty
+            or first_match and self.isMatch(text[1:], pattern)) # or match first char but still keep the pattern
+        else:
+            return first_match and self.isMatch(text[1:], pattern[1:])
+
+    # O(TP)
+    def isMatch(self, text, pattern):
+        memo = {}
+        def dp(i, j):
+            if (i, j) not in memo:
+                if j == len(pattern):
+                    ans = i == len(text)
+                else:
+                    first_match = i < len(text) and pattern[j] in {text[i], '.'}
+                    if j+1 < len(pattern) and pattern[j+1] == '*':
+                        # with '*'
+                        # match empty or match first char but still keep the pattern
+                        ans = dp(i, j+2) or first_match and dp(i+1, j)
+                    else:
+                        # without '*', just continue
+                        ans = first_match and dp(i+1, j+1)
+
+                memo[i, j] = ans
+            return memo[i, j]
+
+        return dp(0, 0)
+
+    def isMatch(self, text, pattern):
+        dp = [[False] * (len(pattern) + 1) for _ in range(len(text) + 1)]
+
+        dp[-1][-1] = True # enpty is true
+        for i in range(len(text), -1, -1):
+            for j in range(len(pattern) - 1, -1, -1):
+                first_match = i < len(text) and pattern[j] in {text[i], '.'}
+                if j+1 < len(pattern) and pattern[j+1] == '*':
+                    dp[i][j] = dp[i][j+2] or first_match and dp[i+1][j]
+                else:
+                    dp[i][j] = first_match and dp[i+1][j+1]
+
+        return dp[0][0]
 
 
 # print(Solution().isMatch("mississippi", "mis*is*p*."))  # False
 # print(Solution().isMatch("mississippi", "mis*is*ip*."))  # True
-# print(Solution().isMatch("aab", "c*a*b"))  # True
+print(Solution().isMatch("aab", "c*a*b"))  # True
 # print(Solution().isMatch("ab", ".*"))  # true
 # print(Solution().isMatch("aa", "a")) # False
 # print(Solution().isMatch("aaa", "aaaa")) # False
@@ -129,5 +178,5 @@ class Solution(object):
 # print(Solution().isMatch("aaa", "ab*a*c*a"))  # True
 # print(Solution().isMatch("a", ".*..a*"))  # false
 # print(Solution().isMatch("", ".*"))  # true
-print(Solution().isMatch("aasdfasdfasdfasdfas",
-                         "aasdf.*asdf.*asdf.*asdf.*s"))  # true
+# print(Solution().isMatch("aasdfasdfasdfasdfas",
+                        #  "aasdf.*asdf.*asdf.*asdf.*s"))  # true

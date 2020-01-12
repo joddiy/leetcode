@@ -30,7 +30,7 @@ class Solution(object):
                     ret_pos = (j, j+i)
         return s[ret_pos[0]:ret_pos[1]+1]
  
-    # O(n^2)
+    # O(n?)
     def longestPalindrome(self, s):
         """
         :type s: str
