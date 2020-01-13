@@ -1,5 +1,5 @@
 class Solution(object):
-    # O(n^2)
+    # O(nlogn)
     def firstMissingPositive(self, nums):
         """
         :type nums: List[int]
