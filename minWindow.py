@@ -10,6 +10,12 @@ class Solution(object):
         :rtype: str
         """
         m = collections.defaultdict(int)
+        # m just like a balance wallet
+        # we first add chars of T into it
+        # then once we encounter chars in S
+        # we minus from m
+        # so for m>0 menas there is still char we need to find
+        # m<0 means we remove much more than we need in T
         for c in t:
             m[c] += 1
         j = 0
@@ -23,13 +29,14 @@ class Solution(object):
             if m[s[i]] > 0:
                 count -= 1
             m[s[i]] -= 1
-            # no more chars in T, we start to move j
+            # we have found all chars in T, we start to move j
             while count == 0:
                 if (i - j + 1) < minLen:
                     minLen = i-j+1
                     minStart = j
                 m[s[j]] += 1
-                # only when m[s[i]] > 0, means not chars in S, instad in T again.
+                # when m[s[i]] > 0, means we remove too much target chars
+                # we increase count to mark there are chars we need to find
                 if m[s[j]] > 0:
                     count += 1
                 j += 1

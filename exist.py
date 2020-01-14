@@ -26,7 +26,7 @@ class Solution(object):
         board[i][j] = tmp
         return res
 
-    #
+    # O(mn*len(words))
     def exist(self, board, word):
         """
         :type board: List[List[str]]
@@ -40,7 +40,7 @@ class Solution(object):
         def dfs(row, col, idx):
             if idx == nword:
                 return True
-            board[row][col] = '#'
+            board[row][col] = '#' # mark we have visited
             if row+1 < nrow and board[row+1][col] == word[idx] and dfs(row+1, col, idx+1):
                 return True
             if row-1 >= 0 and board[row-1][col] == word[idx] and dfs(row-1, col, idx+1):
@@ -49,7 +49,7 @@ class Solution(object):
                 return True
             if col-1 >= 0 and board[row][col-1] == word[idx] and dfs(row, col-1, idx+1):
                 return True
-            board[row][col] = word[idx-1]
+            board[row][col] = word[idx-1] # unmark
             return False
         for i in range(nrow):
             for j in range(ncol):

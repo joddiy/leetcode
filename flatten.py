@@ -20,7 +20,7 @@ class Solution:
                 root.left = None
                 deepest.right = tmp
             if root.right:
-                return recursive(root.right)
+                return recursive(root.right) # the deepest node for upper left node
 
         recursive(root)
 
