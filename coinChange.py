@@ -7,6 +7,7 @@ class Solution(object):
         :rtype: int
         """
         max_v = amount + 1
+        coins = coins[::-1]
         dp = [max_v] * (amount+1)
         dp[0] = 0
         for i in range(1, amount+1):

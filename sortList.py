@@ -22,7 +22,7 @@ class Solution(object):
             right_node = right_head
             node = partition
 
-            # 依次添加node去三个链表
+            # add the node to three lists
             while node.next:
                 node = node.next
                 if node.val < partition.val:
@@ -44,7 +44,7 @@ class Solution(object):
 
             node = left_tail
 
-            # 拼接
+            # concat together
             if not node:
                 node = partition_head
                 left_head = partition_head

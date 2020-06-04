@@ -10,7 +10,7 @@ class Solution(object):
         d[0] = True
         for i in range(1, n+1):
             for w in wordDict:
-                if d[i-len(w)] and s[i-len(w):i] == w:
+                if i-len(w) > 0 and d[i-len(w)] and s[i-len(w):i] == w:
                     d[i] = True
         return d[-1]
 
