@@ -9,7 +9,7 @@ class Solution(object):
         :rtype: bool
         """
         num_sum = sum(nums)
-        if num_sum//2 * 2 != num_sum:
+        if num_sum%2 != 0:
             return False
         num_sum = num_sum//2
         if num_sum < max(nums):
