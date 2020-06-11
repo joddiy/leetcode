@@ -25,7 +25,6 @@ class Solution(object):
             ll = len(left)
             if ll == k-1:
                 return pivot
-
             elif ll > k - 1:
                 return quickselect(left, k)
             else:
