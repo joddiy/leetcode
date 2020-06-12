@@ -1,8 +1,10 @@
-from collections import dafultDict()
-
+from collections import defaultdict
 
 def solution(strs):
-    ret = []
+    ret = defaultdict(list)
+    for s in strs:
+        ret[tuple(sorted(s))].append(s)
+    return list(ret.values())
 
-
-prinf(solution(["eat", "tea", "tan", "ate", "nat", "bat"]))
+# print(solution(["eat", "tea", "tan", "ate", "nat", "bat"]))
+print(solution(["cab","pug","pei","nay","ron","rae","ems","ida","mes"]))
