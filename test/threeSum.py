@@ -3,10 +3,10 @@ def solution(nums):
     n = len(nums)
     nums.sort()
     ret = []
-    for i in range(n-2):
-        if i > 0 and nums[i] == nums[i-1]: # avoid repeat
+    for i in range(n - 2):
+        if i > 0 and nums[i] == nums[i - 1]:  # avoid repeat
             continue
-        j, k = i+1, n-1
+        j, k = i + 1, n - 1
         while j < k:
             s = nums[i] + nums[j] + nums[k]
             if s < 0:
@@ -15,9 +15,9 @@ def solution(nums):
                 k -= 1
             else:
                 ret.append([nums[i], nums[j], nums[k]])
-                while j < k and nums[j] == nums[j+1]: # avoid repeat
+                while j < k and nums[j] == nums[j + 1]:  # avoid repeat
                     j += 1
-                while j < k and nums[k] == nums[k-1]: # avoid repeat
+                while j < k and nums[k] == nums[k - 1]:  # avoid repeat
                     k -= 1
                 j += 1
                 k -= 1

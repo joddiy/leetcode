@@ -7,7 +7,9 @@ def solution(nums):
             ret.append(prefix)
         else:
             for k in range(len(remaining)):
-                recursion(prefix+[remaining[k]], remaining[:k] + remaining[k+1:])
+                recursion(prefix + [remaining[k]],
+                          remaining[:k] + remaining[k + 1:])
+
     recursion([], nums)
     return ret
 

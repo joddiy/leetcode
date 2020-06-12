@@ -1,5 +1,6 @@
 from utils.tools import *
 
+
 # O(n)
 def solution(head, n):
     t = ListNode(None)

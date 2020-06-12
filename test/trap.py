@@ -9,7 +9,7 @@ def solution(height):
         cur_max = max(cur_max, height[i])
         max_left[i] = cur_max
     cur_max = height[-1]
-    for i in range(n-1, -1, -1):
+    for i in range(n - 1, -1, -1):
         cur_max = max(cur_max, height[i])
         max_right[i] = cur_max
         ret += min(max_left[i], max_right[i]) - height[i]

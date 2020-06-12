@@ -24,5 +24,6 @@ def solution(l1, l2):
     return head.next
 
 
-print(listNodeToString(solution(stringToListNode(
-    "[1,2,4]"), stringToListNode("[1,3,4]"))))
+print(
+    listNodeToString(
+        solution(stringToListNode("[1,2,4]"), stringToListNode("[1,3,4]"))))

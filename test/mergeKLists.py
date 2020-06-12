@@ -19,8 +19,10 @@ def solution(lists):
     return head.next
 
 
-print(listNodeToString(solution([
-    stringToListNode("[1,4,5]"),
-    stringToListNode("[1,3,4]"),
-    stringToListNode("[2,6]"),
-])))
+print(
+    listNodeToString(
+        solution([
+            stringToListNode("[1,4,5]"),
+            stringToListNode("[1,3,4]"),
+            stringToListNode("[2,6]"),
+        ])))

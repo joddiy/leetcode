@@ -7,7 +7,8 @@ def solution(candidates, target):
         for i in range(i, len(candidates)):
             num = candidates[i]
             if target - num >= 0:
-                recursion(prefix+[num], i, target-num)
+                recursion(prefix + [num], i, target - num)
+
     recursion([], 0, target)
     return ret
 
