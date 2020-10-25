@@ -917,3 +917,144 @@ t3 = Div(t2, Number(5))
 t4 = Add(Number(1), t3)
 e = Evaluator()
 e.visit(t4)
+
+print('=' * 20)
+
+# 弱引用
+import weakref
+
+
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self._parent = None
+        self.children = []
+
+    def __repr__(self):
+        return 'Node({!r:})'.format(self.value)
+
+    # property that manages the parent as a weak-reference
+    @property
+    def parent(self):
+        return None if self._parent is None else self._parent()
+
+    @parent.setter
+    def parent(self, node):
+        self._parent = weakref.ref(node)
+
+    def add_child(self, child):
+        self.children.append(child)
+        child.parent = self
+
+
+root = Node('parent')
+c1 = Node('child')
+root.add_child(c1)
+print(c1.parent)
+del root
+print(c1.parent)
+
+from functools import total_ordering
+# 使用它来装饰一个类，你只需定义一个 __eq__() 方法，
+# 外加其他方法(__lt__, __le__, __gt__, or __ge__)中的一个即可
+
+
+class Room:
+    def __init__(self, name, length, width):
+        self.name = name
+        self.length = length
+        self.width = width
+        self.square_feet = self.length * self.width
+
+
+@total_ordering
+class House:
+    def __init__(self, name, style):
+        self.name = name
+        self.style = style
+        self.rooms = list()
+
+    @property
+    def living_space_footage(self):
+        return sum(r.square_feet for r in self.rooms)
+
+    def add_room(self, room):
+        self.rooms.append(room)
+
+    def __str__(self):
+        return '{}: {} square foot {}'.format(self.name,
+                                              self.living_space_footage,
+                                              self.style)
+
+    def __eq__(self, other):
+        return self.living_space_footage == other.living_space_footage
+
+    def __lt__(self, other):
+        return self.living_space_footage < other.living_space_footage
+
+
+print('=' * 20)
+
+
+class House:
+    def __eq__(self, other):
+        pass
+
+    def __lt__(self, other):
+        pass
+
+    # Methods created by @total_ordering
+    __le__ = lambda self, other: self < other or self == other
+    __gt__ = lambda self, other: not (self < other or self == other)
+    __ge__ = lambda self, other: not (self < other)
+    __ne__ = lambda self, other: not self == other
+
+
+# The class in question
+class Spam:
+    def __init__(self, name):
+        self.name = name
+
+
+# Caching support
+import weakref
+_spam_cache = weakref.WeakValueDictionary()
+
+
+# 和类本身分开的工厂函数
+def get_spam(name):
+    if name not in _spam_cache:
+        s = Spam(name)
+        _spam_cache[name] = s
+    else:
+        s = _spam_cache[name]
+    return s
+
+
+# ------------------------最后的修正方案------------------------
+class CachedSpamManager2:
+    def __init__(self):
+        self._cache = weakref.WeakValueDictionary()
+
+    def get_spam(self, name):
+        if name not in self._cache:
+            temp = Spam3._new(name)  # Modified creation
+            self._cache[name] = temp
+        else:
+            temp = self._cache[name]
+        return temp
+
+    def clear(self):
+        self._cache.clear()
+
+
+class Spam3:
+    def __init__(self, *args, **kwargs):
+        raise RuntimeError("Can't instantiate directly")
+
+    # Alternate constructor
+    @classmethod
+    def _new(cls, name):
+        self = cls.__new__(cls)
+        self.name = name
+        return self
