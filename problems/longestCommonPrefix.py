@@ -1,4 +1,12 @@
-def solution(strs):
+from tools import *
+
+
+@print_
+def longestCommonPrefix(strs):
+    """
+    :type strs: List[str]
+    :rtype: str
+    """
     ret = ""
     j = 0
     while True:
@@ -16,8 +24,8 @@ def solution(strs):
         ret += cur_c
 
 
-print(solution(["flower", "flow", "flight"]))
-print(solution(["dog", "racecar", "car"]))
-print(solution(["d", "d", "d"]))
-print(solution(["", "", ""]))
-print(solution([""]))
+longestCommonPrefix(["flower", "flow", "flight"])
+longestCommonPrefix(["dog", "racecar", "car"])
+longestCommonPrefix(["d", "d", "d"])
+longestCommonPrefix(["", "", ""])
+longestCommonPrefix([""])
