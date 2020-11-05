@@ -302,20 +302,67 @@ def print_array(arr):
 def list_node(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        args = [stringToListNode(i) for i in args]
-        kwargs = {key: stringToListNode(val) for key, val in kwargs.items()}
-        result = func(*args, **kwargs)
-        return listNodeToString(result)
+        args_ = []
+        for a in args:
+            if isinstance(
+                    a, str) and len(a) >= 2 and a[0] == '[' and a[-1] == ']':
+                args_.append(stringToListNode(a))
+            else:
+                args_.append(a)
+        kwargs_ = {}
+        for k, a in kwargs.items():
+            if isinstance(
+                    a, str) and len(a) >= 2 and a[0] == '[' and a[-1] == ']':
+                kwargs_[k] = stringToListNode(a)
+            else:
+                kwargs_[k] = a
+        result = func(*args_, **kwargs_)
+        if isinstance(result, tuple):
+            result_ = []
+            for r in result:
+                if isinstance(r, ListNode):
+                    result_.append(listNodeToString(r))
+                else:
+                    result_.append(r)
+            return tuple(result_)
+        else:
+            if isinstance(result, ListNode):
+                result = listNodeToString(result)
+            return result
 
     return wrapper
+
 
 def tree_node(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        args = [stringToTreeNode(i) for i in args]
-        kwargs = {key: stringToTreeNode(val) for key, val in kwargs.items()}
-        result = func(*args, **kwargs)
-        return treeNodeToString(result)
+        args_ = []
+        for a in args:
+            if isinstance(
+                    a, str) and len(a) >= 2 and a[0] == '[' and a[-1] == ']':
+                args_.append(stringToTreeNode(a))
+            else:
+                args_.append(a)
+        kwargs_ = {}
+        for k, a in kwargs.items():
+            if isinstance(
+                    a, str) and len(a) >= 2 and a[0] == '[' and a[-1] == ']':
+                kwargs_[k] = stringToTreeNode(a)
+            else:
+                kwargs_[k] = a
+        result = func(*args_, **kwargs_)
+        if isinstance(result, tuple):
+            result_ = []
+            for r in result:
+                if isinstance(r, TreeNode):
+                    result_.append(treeNodeToString(r))
+                else:
+                    result_.append(r)
+            return tuple(result_)
+        else:
+            if isinstance(result, TreeNode):
+                result = treeNodeToString(result)
+            return result
 
     return wrapper
 

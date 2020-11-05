@@ -1,23 +1,27 @@
-def solution(n):
+from tools import *
+
+
+@print_
+def generateParenthesis(n):
+    """
+    :type n: int
+    :rtype: List[str]
+    """
     ret = []
-    if n == 0:
-        return ret
 
-    def recursion(prefix, i, j):
-        # i means the assigned number of "(" and don't have ")"
-        # j means the available number of "("
-        if i == 0 and j == 0:
-            ret.append(prefix)
-        elif i == 0:
-            recursion(prefix + "(", i + 1, j - 1)
-        elif j == 0:
-            recursion(prefix + ")", i - 1, j)
-        else:
-            recursion(prefix + "(", i + 1, j - 1)
-            recursion(prefix + ")", i - 1, j)
+    def recursive(l, ll, s):
+        if l == 0 and ll == 0:
+            ret.append(s)
+            return
+        if l > 0:
+            recursive(l - 1, ll + 1, s + "(")
+        if ll > 0:
+            recursive(l, ll - 1, s + ")")
 
-    recursion("", 0, n)
+    recursive(n, 0, "")
     return ret
 
 
-print(solution(3))
+generateParenthesis(3)
+generateParenthesis(1)
+

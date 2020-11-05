@@ -1,3 +1,5 @@
+from tools import *
+
 phone = {
     '2': ['a', 'b', 'c'],
     '3': ['d', 'e', 'f'],
@@ -11,21 +13,28 @@ phone = {
 
 
 # O(3^N * 4^M)
-def solution(digits):
-    ret = []
+@print_
+def letterCombinations(digits):
+    """
+    :type digits: str
+    :rtype: List[str]
+    """
     if not digits:
-        return ret
+        return []
 
-    def recursion(prefix, digits):
-        if not digits:
-            ret.append(prefix)
-        else:
-            for c in phone[digits[0]]:
-                recursion(prefix + c, digits[1:])
+    ret = []
+    n = len(digits)
 
-    recursion("", digits)
+    def recursive(i, s):
+        if i >= n:
+            ret.append(s)
+            return
+        for c in phone[digits[i]]:
+            recursive(i + 1, s + c)
+
+    recursive(0, "")
     return ret
 
 
-print(solution("23"))
-print(solution(""))
+letterCombinations("23")
+letterCombinations("")

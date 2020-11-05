@@ -1,8 +1,16 @@
-# O(n)
-def solution(s):
+from tools import *
+
+
+@print_
+def isValid(s):
+    """
+    :type s: str
+    :rtype: bool
+    """
     stack = []
+    left = set("({[")
     for c in s:
-        if c in ("(", "[", "{"):
+        if c in left:
             stack.append(c)
         else:
             if not stack:
@@ -17,4 +25,4 @@ def solution(s):
     return not stack
 
 
-print(solution(r"()[]{}"))
+isValid(r"()[]{}")
