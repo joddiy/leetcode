@@ -1,16 +1,25 @@
-def solution(matrix):
-    n = len(matrix)
-    i, j = 0, n - 1
-    # swap
-    while i < j:
-        matrix[i], matrix[j] = matrix[j], matrix[i]
-        i += 1
-        j -= 1
-    # transpose
-    for i in range(n):
-        for j in range(i, n):
-            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
-    return matrix
+from tools import *
 
 
-print(solution([[1, 2, 3], [4, 5, 6], [7, 8, 9]],))
+class Solution(object):
+    @print_
+    def rotate(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: None Do not return anything, modify matrix in-place instead.
+        """
+        n = len(matrix)
+        # swap
+        for i in range(n // 2):
+            matrix[i], matrix[n - 1 - i] = matrix[n - 1 - i], matrix[i]
+
+        # transpose
+        for i in range(n):
+            for j in range(i, n):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        return matrix
+
+
+rotate = Solution().rotate
+
+rotate([[1, 2, 3], [4, 5, 6], [7, 8, 9]])

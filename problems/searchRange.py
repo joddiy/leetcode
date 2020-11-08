@@ -1,30 +1,42 @@
-def solution(nums, target):
+from tools import *
 
-    def recursion_left(s, e):
-        if e < s:
-            return s
-        m = (s + e) // 2
+
+@print_
+def searchRange(nums, target):
+    """
+    :type nums: List[int]
+    :type target: int
+    :rtype: List[int]
+    """
+    if not nums:
+        return (-1, -1)
+
+    # find the first value which is larger
+    # or equal than target
+    def searchLeft(i, j):
+        if j < i:
+            return i
+        m = (i + j) // 2
         if nums[m] < target:
-            return recursion_left(m + 1, e)
+            return searchLeft(m + 1, j)
         else:
-            return recursion_left(s, m - 1)
+            return searchLeft(i, m - 1)
 
-    def recursion_right(s, e):
-        if e < s:
-            return e
-        m = (s + e) // 2
-        if nums[m] <= target:
-            return recursion_right(m + 1, e)
+    # find the first value which is less
+    # or equal than target
+    def searchRight(i, j):
+        if j < i:
+            return j
+        m = (i + j) // 2
+        if nums[m] > target:
+            return searchRight(i, m - 1)
         else:
-            return recursion_right(s, m - 1)
+            return searchRight(m + 1, j)
 
-    left = recursion_left(0, len(nums) - 1)
-    right = recursion_right(0, len(nums) - 1)
-    print(left, right)
-    if left > right:
-        return [-1, -1]
-    else:
-        return [left, right]
+    l, r = searchLeft(0, len(nums) - 1), searchRight(0, len(nums) - 1)
+    return (l, r) if l <= r else (-1, -1)
 
 
-print(solution([5, 7, 7, 8, 8, 10], 8))
+searchRange([5, 7, 7, 8, 8, 10], 8)
+searchRange([5, 7, 7, 8, 8, 10], 6)
+searchRange([], 0)

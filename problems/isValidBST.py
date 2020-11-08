@@ -1,23 +1,28 @@
-from utils.tools import *
+from tools import *
 import sys
 
 
-def solution(root):
-    if not root:
-        return True
+class Solution(object):
+    @print_
+    @tree_node
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        def valid(root, low, high):
+            if not root:
+                return True
+            if root.val <= low or root.val >= high:
+                return False
+            return valid(root.left, low, root.val) and valid(
+                root.right, root.val, high)
 
-    def recursion(root, min_v, max_v):
-        if not root:
-            return True
-        elif root.val <= min_v or root.val >= max_v:
-            return False
-        else:
-            return recursion(root.left, min_v, root.val) and recursion(
-                root.right, root.val, max_v)
-
-    return recursion(root.left, -sys.maxsize, root.val) and recursion(
-        root.right, root.val, sys.maxsize)
+        return valid(root, -sys.maxsize, sys.maxsize)
 
 
-print(solution(stringToTreeNode("[2,1,3]")))
-print(solution(stringToTreeNode("[5,1,4,null,null,3,6]")))
+solution = Solution().isValidBST
+
+solution("[]")
+solution("[2,1,3]")
+solution("[5,1,4,null,null,3,6]")

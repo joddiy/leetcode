@@ -1,21 +1,28 @@
-def solution(nums):
-    n = len(nums)
-    i, j, k = 0, 0, n - 1
-    while i <= k:
-        if nums[i] == 0:
-            if i != j:
-                nums[i], nums[j] = nums[j], nums[i]
-                j += 1
-            else:
-                j += 1
+from tools import *
+
+
+class Solution(object):
+    @print_
+    def sortColors(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        i, k, j = 0, 0, len(nums) - 1
+        while k <= j:
+            if nums[k] == 2:
+                nums[k], nums[j] = nums[j], nums[k]
+                j -= 1
+            elif nums[k] == 0:
+                nums[k], nums[i] = nums[i], nums[k]
                 i += 1
-        elif nums[i] == 2:
-            nums[i], nums[k] = nums[k], nums[i]
-            k -= 1
-        else:
-            i += 1
-    return nums
+                k += 1
+            else:
+                k += 1
+        return nums
 
 
-print(solution([2, 0, 2, 1, 1, 0]))
-print(solution([1, 2, 0]))
+solution = Solution().sortColors
+
+solution([2, 0, 2, 1, 1, 0])
+solution([1, 2, 0])

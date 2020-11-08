@@ -1,28 +1,36 @@
-from utils.tools import *
+from tools import *
 from heapq import *
 
-
-def solution(lists):
-    hp = []
-    heapify(hp)
-    head = ListNode(None)
-    p = head
-    for l in lists:
-        heappush(hp, l)
-    while hp:
-        node = heappop(hp)
-        p.next = node
-        p = p.next
+@print_
+@list_node
+def mergeKLists(lists):
+    """
+    :type lists: List[ListNode]
+    :rtype: ListNode
+    """
+    ret = ListNode(None)
+    head = ret
+    heap_ = []
+    for i in lists:
+        if i:
+            heap_.append((i.val, i))
+    heapify(heap_)
+    while heap_:
+        _, node = heappop(heap_)
         if node.next:
-            heappush(hp, node.next)
-
+            tmp_ = node.next
+            heappush(heap_, (tmp_.val, tmp_))
+        ret.next = node
+        ret = ret.next
     return head.next
 
 
-print(
-    listNodeToString(
-        solution([
-            stringToListNode("[1,4,5]"),
-            stringToListNode("[1,3,4]"),
-            stringToListNode("[2,6]"),
-        ])))
+mergeKLists([
+    stringToListNode("[1,4,5]"),
+    stringToListNode("[1,3,4]"),
+    stringToListNode("[2,6]"),
+])
+mergeKLists([
+    stringToListNode("[]")
+])
+mergeKLists([])

@@ -1,12 +1,22 @@
-from collections import defaultdict
+from tools import *
+
+class Solution(object):
+    @print_
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        ret = {}
+        for s in strs:
+            tmp = tuple(sorted(s))
+            if tmp not in ret:
+                ret[tmp] = []
+            ret[tmp].append(s)
+        return list(ret.values())
 
 
-def solution(strs):
-    ret = defaultdict(list)
-    for s in strs:
-        ret[tuple(sorted(s))].append(s)
-    return list(ret.values())
+groupAnagrams = Solution().groupAnagrams
 
-
-# print(solution(["eat", "tea", "tan", "ate", "nat", "bat"]))
-print(solution(["cab", "pug", "pei", "nay", "ron", "rae", "ems", "ida", "mes"]))
+groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"])
+groupAnagrams(["cab", "pug", "pei", "nay", "ron", "rae", "ems", "ida", "mes"])

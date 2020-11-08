@@ -1,17 +1,25 @@
-def solution(nums):
+from tools import *
+
+
+@print_
+def permute(nums):
+    """
+    :type nums: List[int]
+    :rtype: List[List[int]]
+    """
+    if not nums:
+        return []
     ret = []
-    n = len(nums)
 
-    def recursion(prefix, remaining):
+    def recursive(current, remaining):
         if not remaining:
-            ret.append(prefix)
-        else:
-            for k in range(len(remaining)):
-                recursion(prefix + [remaining[k]],
-                          remaining[:k] + remaining[k + 1:])
+            ret.append(current)
+        for i in range(len(remaining)):
+            recursive(current + [remaining[i]],
+                      remaining[:i] + remaining[i + 1:])
 
-    recursion([], nums)
+    recursive([], nums)
     return ret
 
 
-print(solution([1, 2, 3]))
+permute([1, 2, 3])

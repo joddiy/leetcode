@@ -1,32 +1,48 @@
-from utils.tools import *
+from tools import *
 
 
-def solution(root):
-    ret = []
+class Solution(object):
+    @print_
+    @tree_node
+    def inorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        ret = []
 
-    def recursion(root):
-        if not root:
-            return
-        recursion(root.left)
-        ret.append(root.val)
-        recursion(root.right)
+        def inorder(root):
+            if not root:
+                return
+            inorder(root.left)
+            ret.append(root.val)
+            inorder(root.right)
 
-    recursion(root)
-    return ret
+        inorder(root)
+        return ret
+
+    @print_
+    @tree_node
+    def inorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        ret = []
+        queue = [root]
+
+        while queue:
+            node = queue.pop(-1)
+            if not node:
+                continue
+            elif isinstance(node, TreeNode):
+                queue.extend([node.right, node.val, node.left])
+            else:
+                ret.append(node)
+
+        return ret
 
 
-def solution(root):
-    ret = []
-    stack = [root]
-    while stack:
-        node = stack.pop()
-        if not node:
-            continue
-        elif isinstance(node, int):
-            ret.append(node)
-        else:
-            stack.extend([node.right, node.val, node.left])
-    return ret
+solution = Solution().inorderTraversal
 
-
-print(solution(stringToTreeNode("[1,null,2,3]")))
+solution("[1,null,2,3]")
