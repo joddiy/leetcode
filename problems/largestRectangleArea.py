@@ -1,22 +1,36 @@
-def solution(heights):
-    heights = [0] + heights + [0]
-    n = len(heights)
-    min_left = [0] * n
-    min_right = [0] * n
-    ret = 0
-    for i in range(1, n - 1):
-        tmp_i = i - 1
-        while tmp_i > 0 and heights[tmp_i] >= heights[i]:
-            tmp_i = min_left[tmp_i]
-        min_left[i] = tmp_i
-    for j in range(n - 2, 0, -1):
-        tmp_j = j + 1
-        while tmp_j < n - 1 and heights[tmp_j] >= heights[j]:
-            tmp_j = min_right[tmp_j]
-        min_right[j] = tmp_j
-    for i in range(1, n - 1):
-        ret = max(ret, heights[i] * (min_right[i] - min_left[i] - 1))
-    return ret
+from tools import *
 
 
-print(solution([2, 1, 5, 6, 2, 3]))
+class Solution(object):
+    @print_
+    def largestRectangleArea(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        heights = [0] + heights + [0]
+        n = len(heights)
+        l_dp, r_dp = [0] * n, [0] * n
+        for i in range(1, n - 1):
+            j = i - 1
+            while j > 0 and heights[j] >= heights[i]:
+                j = l_dp[j]
+            l_dp[i] = j
+
+        for i in range(n - 2, 0, -1):
+            j = i + 1
+            while j > 0 and heights[j] >= heights[i]:
+                j = r_dp[j]
+            r_dp[i] = j
+
+        ret = 0
+        for i in range(1, n - 1):
+            ret = max(ret, (r_dp[i] - l_dp[i] - 1) * heights[i])
+        return ret
+
+
+solution = Solution().largestRectangleArea
+
+solution([2, 1, 5, 6, 2, 3])
+solution([0])
+solution([])

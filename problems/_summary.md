@@ -4,10 +4,12 @@ lengthOfLongestSubstring
 maxArea
 threeSum
 sortColors
+minWindow
 
 # DP
 
 longestPalindrome
+numDecodings
 
 # Recursive
 
@@ -16,6 +18,8 @@ generateParenthesis
 longestCommonPrefix
 permute
 myPow
+isMatch
+isMatch44
 
 # List
 

@@ -8,16 +8,24 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        s = s.lstrip('0')
         if not s:
             return 0
-        ret = 1
-        for i in range(len(s)):
-            if s[i] == '0' or (i >= 1 and s[i - 1] == '0'):
-                continue
-            if i >= 1 and int(s[i - 1:i + 1]) <= 26:
-                ret += 1
-        return ret
+
+        n = len(s)
+        dp = [0] * (n + 1)
+        # set the first one for the first dp[i-2]
+        dp[0] = 1
+        # set this zero for string starting with zeros
+        dp[1] = 0 if s[0] == '0' else 1
+        for i in range(2, n + 1):
+            # one-step
+            if 0 < int(s[i - 1:i]) <= 9:
+                dp[i] += dp[i - 1]
+            # two-step
+            if 10 <= int(s[i - 2:i]) <= 26:
+                dp[i] += dp[i - 2]
+
+        return dp
 
 
 solution = Solution().numDecodings
@@ -32,4 +40,5 @@ solution = Solution().numDecodings
 # solution("0")
 # solution("00")
 # solution("002")
-solution("2101")
+# solution("2101")
+solution("1123")

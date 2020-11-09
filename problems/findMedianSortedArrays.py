@@ -1,36 +1,57 @@
-def solution(nums1, nums2):
-    m, n = len(nums1), len(nums2)
-    if m > n:
-        nums1, nums2, m, n = nums2, nums1, n, m
-    imin, imax, half_len = 0, m, (m + n + 1) // 2
-    while imin <= imax:
-        i = (imin + imax) // 2
-        j = half_len - i
-        if i > 0 and nums1[i - 1] > nums2[j]:
-            imax = i - 1
-        elif i < m and nums1[i] < nums2[j - 1]:
-            imin = i + 1
-        else:
-            if i == 0:
-                max_of_left = nums2[j - 1]
-            elif j == 0:
-                max_of_left = nums1[i - 1]
+from tools import *
+
+
+class Solution(object):
+    @print_
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        m, n = len(nums1), len(nums2)
+        # important, otherwise list index out of range
+        if m > n:
+            nums1, nums2, m, n = nums2, nums1, n, m
+
+        h = (m + n + 1) // 2
+
+        def find(s, e):
+            i = (s + e) // 2
+            j = h - i
+            if i > 0 and nums1[i - 1] > nums2[j]:
+                # notice: new idx is (s, i-1)
+                return find(s, i - 1)
+            elif i < m and nums2[j - 1] > nums1[i]:
+                # notice: new idx is (i+1, e)
+                return find(i + 1, e)
             else:
-                max_of_left = max(nums1[i - 1], nums2[j - 1])
+                l, r = 0, 0
+                if i == 0:
+                    l = nums2[j - 1]
+                elif j == 0:
+                    l = nums1[i - 1]
+                else:
+                    l = max(nums1[i - 1], nums2[j - 1])
 
-            if (m + n) % 2 == 1:
-                return max_of_left
+                # if the lenght is odd
+                if (m + n) % 2 == 1:
+                    return l
 
-            if i == m:
-                min_of_right = nums2[j]
-            elif j == n:
-                min_of_right = nums1[i]
-            else:
-                min_of_right = min(nums1[i], nums2[j])
+                # else the length is even
+                if i == m:
+                    r = nums2[j]
+                elif j == n:
+                    r = nums1[i]
+                else:
+                    r = min(nums1[i], nums2[j])
+                return (l + r) / 2.
 
-            return (max_of_left + min_of_right) / 2.
+        return find(0, m)
 
 
-# print(solution([1, 2], [3, 4]))
-# print(solution([1, 3], [2]))
-print(solution([1], []))
+solution = Solution().findMedianSortedArrays
+
+solution([1, 2], [3, 4])
+solution([1, 3], [2])
+solution([1], [])
