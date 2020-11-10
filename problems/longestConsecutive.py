@@ -1,16 +1,30 @@
-def solution(nums):
-    if not nums:
-        return 0
-    set_nums = set(nums)
-    max_v = 0
-    for num in nums:
-        if num - 1 not in set_nums:
-            count = 1
-            while num + 1 in set_nums:
-                num += 1
-                count += 1
-            max_v = max(max_v, count)
-    return max_v
+from tools import *
 
 
-print(solution([100, 4, 200, 1, 3, 2]))
+class Solution(object):
+    @print_
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+
+        nums_ = set(nums)
+        ret = 0
+        for i in nums:
+            if i - 1 in nums_:
+                continue
+            len_ = 0
+            while i in nums_:
+                i += 1
+                len_ += 1
+            ret = max(ret, len_)
+        return ret
+
+
+solution = Solution().longestConsecutive
+
+solution([100, 4, 200, 1, 3, 2])
+solution([0, 3, 7, 2, 5, 8, 4, 6, 0, 1])

@@ -1,12 +1,24 @@
-def solution(s, wordDict):
-    n = len(s)
-    dp = [False] * (n + 1)
-    dp[0] = True
-    for i in range(1, n + 1):
-        for w in wordDict:
-            if i >= len(w) and dp[i - len(w)] and s[i - len(w):i] == w:
-                dp[i] = True
-    return dp[-1]
+from tools import *
 
 
-print(solution("leetcode", ["leet", "code"]))
+class Solution(object):
+    @print_
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        dp = [True] + [False] * len(s)
+        for i in range(len(s)):
+            for w in wordDict:
+                if i >= len(w) - 1 and s[i + 1 - len(w):i + 1] == w:
+                    dp[i + 1] = dp[i + 1] or dp[i + 1 - len(w)]
+        return dp[-1]
+
+
+solution = Solution().wordBreak
+
+solution("leetcode", ["leet", "code"])
+solution("applepenapple", ["apple", "pen"])
+solution("catsandog", ["cats", "dog", "sand", "and", "cat"])

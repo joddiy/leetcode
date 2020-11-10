@@ -10,6 +10,7 @@ minWindow
 
 longestPalindrome
 numDecodings
+wordBreak
 
 # Recursive
 
@@ -20,12 +21,14 @@ permute
 myPow
 isMatch
 isMatch44
+copyRandomList
 
 # List
 
 removeNthFromEnd
 mergeTwoLists
 mergeKLists
+copyRandomList
 
 # Binary Search
 

@@ -1,56 +1,76 @@
 from collections import defaultdict
+from tools import *
 
 
 class Node:
-
     def __init__(self, x, next=None, random=None):
         self.val = int(x)
         self.next = next
         self.random = random
 
 
-def solution(head):
-    node_dict = defaultdict(Node)
+class Solution(object):
+    @print_
+    def copyRandomList(self, head):
+        """
+        :type head: Node
+        :rtype: Node
+        """
+        node_map = defaultdict(Node)
 
-    def build(node):
-        if not node:
+        def build(head):
+            if not head:
+                return None
+            head_ = Node(head.val)
+            node_map[head] = head_
+            next_ = head.next
+            if next_:
+                if next_ not in node_map:
+                    head_.next = build(head.next)
+                else:
+                    head_.next = node_map[next_]
+            random_ = head.random
+            if random_:
+                if random_ not in node_map:
+                    head_.random = build(head.random)
+                else:
+                    head_.random = node_map[random_]
+
+            return head_
+
+        return build(head)
+
+    @print_
+    def copyRandomList(self, head):
+        """
+        :type head: Node
+        :rtype: Node
+        """
+        if not head:
             return None
-        _node = Node(node.val)
-        node_dict[node] = _node
-        if node.random:
-            if node.random in node_dict:
-                _node.random = node_dict[node.random]
-            else:
-                _node.random = build(node.random)
-        if node.next:
-            if node.next in node_dict:
-                _node.next = node_dict[node.next]
-            else:
-                _node.next = build(node.next)
-        return _node
+        node_map = defaultdict(Node)
 
-    return build(head)
+        ret = Node(head.val)
+        head_ = ret
+        node_map[head] = head_
+        while head:
+            next_ = head.next
+            if next_:
+                if next_ not in node_map:
+                    node_map[next_] = Node(next_.val)
+                head_.next = node_map[next_]
+            random_ = head.random
+            if random_:
+                if random_ not in node_map:
+                    node_map[random_] = Node(random_.val)
+                head_.random = node_map[random_]
+
+            head_ = head_.next
+            head = head.next
+
+        return ret
 
 
-def solution(head):
-    if not head:
-        return None
+solution = Solution().copyRandomList
 
-    node_dict = defaultdict(Node)
-
-    _head = Node(head.val)
-    node_dict[head] = _head
-    ret_head = _head
-    while head:
-        if head.random:
-            if head.random not in node_dict:
-                node_dict[head.random] = Node(head.random.val)
-            _head.random = node_dict[head.random]
-        if head.next:
-            if head.next not in node_dict:
-                node_dict[head.next] = Node(head.next.val)
-            _head.next = node_dict[head.next]
-        head = head.next
-        _head = _head.next
-
-    return ret_head
+solution("[[7,null],[13,0],[11,4],[10,2],[1,0]]")
