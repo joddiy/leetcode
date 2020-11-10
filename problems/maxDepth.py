@@ -1,31 +1,40 @@
-from utils.tools import *
+from tools import *
 
 
-def solution(root):
-    ret = 0
+class Solution(object):
+    @print_
+    @tree_node
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        def find(root):
+            if not root:
+                return 0
+            return max(find(root.left), find(root.right)) + 1
 
-    def recursion(root, level):
-        if not root:
-            return
-        ret = max(ret, level + 1)
-        recursion(root.left, level + 1)
-        recursion(root.right, level + 1)
+        return find(root)
 
-    recursion(root, 0)
-    return ret
+    @print_
+    @tree_node
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        ret = 0
 
-
-def solution(root):
-    ret = 0
-
-    queue = [(0, root)]
-    while queue:
-        level, node = queue.pop(0)
-        if not node:
-            continue
-        ret = max(ret, level + 1)
-        queue.extend([(level + 1, node.left), (level + 1, node.right)])
-    return ret
+        queue = [(0, root)]
+        while queue:
+            level, node = queue.pop(0)
+            if not node:
+                continue
+            ret = max(ret, level + 1)
+            queue.extend([(level + 1, node.left), (level + 1, node.right)])
+        return ret
 
 
-print(solution(stringToTreeNode("[3,9,20,null,null,15,7]")))
+solution = Solution().maxDepth
+
+solution("[3,9,20,null,null,15,7]")

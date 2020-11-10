@@ -1,35 +1,48 @@
-from utils.tools import *
+from tools import *
 
 
-def solution(root):
-    ret = []
+class Solution(object):
+    @print_
+    @tree_node
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        ret = []
 
-    def recursion(root, level):
-        if not root:
-            return
-        if level > len(ret) - 1:
-            ret.append([])
-        ret[level].append(root.val)
-        recursion(root.left, level + 1)
-        recursion(root.right, level + 1)
+        def recursive(root, i):
+            if not root:
+                return
+            if i >= len(ret):
+                ret.append([])
+            ret[i].append(root.val)
+            recursive(root.left, i + 1)
+            recursive(root.right, i + 1)
 
-    recursion(root, 0)
-    return ret
+        recursive(root, 0)
+        return ret
 
+    @print_
+    @tree_node
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        ret = []
 
-def solution(root):
-    ret = []
+        queue = [(0, root)]
+        while queue:
+            level, node = queue.pop(0)
+            if not node:
+                continue
+            if level > len(ret) - 1:
+                ret.append([])
+            ret[level].append(node.val)
+            queue.extend([(level + 1, node.left), (level + 1, node.right)])
+        return ret
 
-    queue = [(0, root)]
-    while queue:
-        level, node = queue.pop(0)
-        if not node:
-            continue
-        if level > len(ret) - 1:
-            ret.append([])
-        ret[level].append(node.val)
-        queue.extend([(level + 1, node.left), (level + 1, node.right)])
-    return ret
+solution = Solution().levelOrder
 
-
-print(solution(stringToTreeNode("[3,9,20,null,null,15,7]")))
+solution("[3,9,20,null,null,15,7]")
