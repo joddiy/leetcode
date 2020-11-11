@@ -1,21 +1,40 @@
-def solution(nums):
-    if not nums:
-        return 0
-    dp = [[0, 0] for _ in range(len(nums))]  # (rob, not_rob) * n
-    dp[0][0], dp[0][1] = nums[0], 0
-    for i in range(1, len(nums)):
-        dp[i][0] = dp[i - 1][1] + nums[i]
-        dp[i][1] = max(dp[i - 1])
-    return max(dp[-1])
+from tools import *
 
 
-def solution(nums):
-    last, now = 0, 0
-    for i in nums:
-        last, now = now, max(last + i, now)
-    return now
+class Solution(object):
+    @print_
+    def rob(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+
+        dp = [0] * (len(nums) + 1)
+        dp[1] = nums[0]
+        for i in range(2, len(nums) + 1):
+            dp[i] = dp[i - 1]
+            dp[i] = max(dp[i], nums[i - 1] + dp[i - 2])
+        return dp[-1]
+
+    @print_
+    def rob(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+
+        last, now = 0, nums[0]
+        for i in range(2, len(nums) + 1):
+            now, last = max(now, nums[i - 1] + last), now
+        return now
 
 
-# print(solution([1, 2, 3, 1]))
-# print(solution([2, 7, 9, 3, 1]))
-print(solution([]))
+solution = Solution().rob
+
+solution([1, 2, 3, 1])
+solution([2, 7, 9, 3, 1])
+solution([])

@@ -1,21 +1,20 @@
 class Node:
-    
     def __init__(self, k, x, next=None, pre=None):
         self.key = k
         self.val = x
         self.next = next
         self.pre = pre
 
+
 class LRUCache(object):
-    
     def __init__(self, capacity):
         """
         :type capacity: int
         """
         self.capacity = capacity
-        self.dict = {}
-        self.head = Node(0, 0)
-        self.tail = Node(0, 0)
+        self.map = {}
+        self.tail = Node(None, None)
+        self.head = Node(None, None)
         self.head.next = self.tail
         self.tail.pre = self.head
 
@@ -24,13 +23,11 @@ class LRUCache(object):
         :type key: int
         :rtype: int
         """
-        if key in self.dict:
-            node = self.dict[key]
-            self._remove(node)
-            self._add(node) 
+        if key in self.map:
+            node = self.map[key]
+            self.put(node.key, node.value)
             return node.val
-        else:
-            return -1
+        return -1
 
     def put(self, key, value):
         """
@@ -38,25 +35,26 @@ class LRUCache(object):
         :type value: int
         :rtype: None
         """
-        if key in self.dict:
-            self._remove(self.dict[key])
+        # if exist, remove then add
+        if key in self.map:
+            self._del(key)
+        # if full, remove from end
+        elif len(self.map) == self.capacity:
+            self._del(self.tail.pre.key)
         node = Node(key, value)
-        self._add(node)
-        self.dict[key] = node
-        while len(self.dict) > self.capacity:
-            tmp_node = self.head.next
-            self._remove(tmp_node)
-            del self.dict[tmp_node.key]
+        node.next = self.head.next
+        node.pre = self.head
+        self.head.next = node
+        node.next.pre = node
+        self.map[key] = node
 
-    def _remove(self, node):
-        p = node.pre
-        n = node.next
-        p.next = n
-        n.pre = p
-    
-    def _add(self, node):
-        p = self.tail.pre
-        p.next = node
-        node.pre = p
-        node.next = self.tail
-        self.tail.pre = node
+    def _del(self, key):
+        """
+        :type key: int
+        :rtype: None
+        """
+        if key in self.map:
+            node = self.map[key]
+            node.pre.next = node.next
+            node.next.pre = node.pre
+            del self.map[key], node

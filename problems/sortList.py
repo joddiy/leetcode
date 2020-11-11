@@ -1,51 +1,127 @@
-from utils.tools import *
+from tools import *
 
-def solution(head):
-    if head is None:
-        return None
 
-    def recursive(head):
-        if head is None:
-            return None, None
+class Solution(object):
+    # quick sort
+    @print_
+    @list_node
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        def sort(head: ListNode):
+            if not head:
+                return None, None
 
-        partition_node = head
-        middle_head = ListNode(None)
-        middle_cur = middle_head
-        left_head = ListNode(None)
-        left_cur = left_head
-        right_head = ListNode(None)
-        right_cur = right_head
+            mid_list = ListNode(None)
+            left_list = ListNode(None)
+            right_list = ListNode(None)
 
-        while head:
-            if head.val < partition_node.val:
-                left_cur.next = ListNode(head.val)
-                left_cur = left_cur.next
-            elif head.val > partition_node.val:
-                right_cur.next = ListNode(head.val)
-                right_cur = right_cur.next
-            else:
-                middle_cur.next = ListNode(head.val)
-                middle_cur = middle_cur.next
-            head = head.next
-        
-        left_head, left_tail = recursive(left_head.next)
-        right_head, right_tail = recursive(right_head.next)
+            _m = mid_list
+            _l = left_list
+            _r = right_list
 
-        if left_head is not None:
-            left_tail.next = middle_head.next
-        else:
-            left_head = middle_head
-        if right_head is not None:
-            middle_cur.next = right_head.next
-        else:
-            right_tail = middle_cur
+            m = head.val
+            while head:
+                if head.val < m:
+                    _l.next = head
+                    _l = _l.next
+                    head = head.next
+                    _l.next = None
+                elif head.val > m:
+                    _r.next = head
+                    _r = _r.next
+                    head = head.next
+                    _r.next = None
+                else:
+                    _m.next = head
+                    _m = _m.next
+                    head = head.next
+                    _m.next = None
 
-        return left_head, right_tail
+            ret_h = mid_list.next
+            ret_t = _m
 
-    head, _ = recursive(head)
-    return head.next
+            # recursive
+            l_h, l_t = sort(left_list.next)
+            r_h, r_t = sort(right_list.next)
 
-# print(listNodeToString(solution(stringToListNode("[4,2,1,3]"))))
-# print(listNodeToString(solution(stringToListNode("[-1,5,3,4,0]"))))
-# print(listNodeToString(solution(stringToListNode("[]"))))
-print(listNodeToString(solution(stringToListNode("[-1]"))))
+            # concate
+            if l_t:
+                l_t.next = ret_h
+                ret_h = l_h
+
+            if r_h:
+                ret_t.next = r_h
+                ret_t = r_t
+
+            return ret_h, ret_t
+
+        return sort(head)[0]
+
+    # merge sort
+    @print_
+    @list_node
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        def sort(head: ListNode):
+            if not head:
+                return None, None
+
+            mid_list = ListNode(None)
+            left_list = ListNode(None)
+            right_list = ListNode(None)
+
+            _m = mid_list
+            _l = left_list
+            _r = right_list
+
+            m = head.val
+            while head:
+                if head.val < m:
+                    _l.next = head
+                    _l = _l.next
+                    head = head.next
+                    _l.next = None
+                elif head.val > m:
+                    _r.next = head
+                    _r = _r.next
+                    head = head.next
+                    _r.next = None
+                else:
+                    _m.next = head
+                    _m = _m.next
+                    head = head.next
+                    _m.next = None
+
+            ret_h = mid_list.next
+            ret_t = _m
+
+            # recursive
+            l_h, l_t = sort(left_list.next)
+            r_h, r_t = sort(right_list.next)
+
+            # concate
+            if l_t:
+                l_t.next = ret_h
+                ret_h = l_h
+
+            if r_h:
+                ret_t.next = r_h
+                ret_t = r_t
+
+            return ret_h, ret_t
+
+        return sort(head)[0]
+
+
+solution = Solution().sortList
+
+solution("[4,2,1,3]")
+# solution("[-1,5,3,4,0]")
+# solution("[]")
+# solution("[-1]")

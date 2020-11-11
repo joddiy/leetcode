@@ -1,10 +1,22 @@
-def solution(nums):
-    maximum = b = s = nums[0]
-    for num in nums[1:]:
-        b, s = max(num, b * num, s * num), min(num, b * num, s * num)
-        maximum = max(maximum, b)
-    return maximum
+from tools import *
 
 
-# print(solution([2, 3, -2, 4]))
-print(solution([-2, 0, -1]))
+class Solution(object):
+    @print_
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        m = n = p = nums[0]
+        for i in range(1, len(nums)):
+            num = nums[i]
+            p, n = max(num, p * num, n * num), min(num, p * num, n * num)
+            m = max(m, p)
+        return m
+
+
+solution = Solution().maxProduct
+
+solution([2, 3, -2, 4])
+solution([-2, 0, -1])
