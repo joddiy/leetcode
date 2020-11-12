@@ -1,31 +1,26 @@
-from utils.tools import *
+from tools import *
 
 
-def solution(head):
-    _head = ListNode(None)
-    while head:
-        tmp = ListNode(head.val)
-        _head.next, tmp.next = tmp, _head.next
-        head = head.next
-    return _head.next
+class Solution(object):
+    @print_
+    @list_node
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        ret = ListNode(None)
+        while head:
+            # pick the node
+            tmp = head
+            head = head.next
+            # add from head
+            tmp.next = ret.next
+            ret.next = tmp
+        return ret.next
 
 
-def solution(head):
-    if not head:
-        return None
+solution = Solution().reverseList
 
-    def recursive(head):
-        tmp = ListNode(head.val)
-        if not head.next:
-            return tmp, tmp
-        else:
-            _head, _tail = recursive(head.next)
-            _tail.next = tmp
-            return _head, tmp
-
-    _head, _ = recursive(head)
-    return _head
-
-
-print(listNodeToString(solution(stringToListNode("[1,2,3,4,5]"))))
-print(listNodeToString(solution(stringToListNode("[]"))))
+solution("[1,2,3,4,5]")
+solution("[]")

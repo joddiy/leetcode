@@ -1,31 +1,45 @@
-# O(klogk+2(n-k)logk)
-def solution(nums, k):
-    import heapq
-    k_heap = nums[0:k]
-    heapq.heapify(k_heap)
-    for i in range(k, len(nums)):
-        heapq.heappush(k_heap, nums[i])
-        heapq.heappop(k_heap)
-    return heapq.heappop(k_heap)
+from tools import *
+import heapq
 
 
-# O(n)
-def solution(nums, k):
+class Solution(object):
+    # O(nlogk)
+    @print_
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        heap_ = nums[:k]
+        heapq.heapify(heap_)
+        for i in range(k, len(nums)):
+            heapq.heappushpop(heap_, nums[i])
+        return heapq.heappop(heap_)
 
-    def recursive(nums, k):
-        pivot = nums.pop(len(nums) // 2)
-        right = [num for num in nums if num > pivot]
-        lr = len(right)
-        if k == lr + 1:
-            return pivot
-        elif k < lr + 1:
-            return recursive(right, k)
-        else:
-            left = [num for num in nums if num <= pivot]
-            return recursive(left, k - lr - 1)
+    # O(2n)
+    @print_
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        def select(nums, k):
+            m = nums.pop(len(nums) // 2)
+            larger = [n for n in nums if n > m]
+            ll = len(larger)
+            if k <= ll:
+                return select(larger, k)
+            elif k == ll + 1:
+                return m
+            else:
+                less = [n for n in nums if n <= m]
+                return select(less, k - ll - 1)
 
-    return recursive(nums, k)
+        return select(nums, k)
 
 
-print(solution([3, 2, 1, 5, 6, 4], 2))
-print(solution([3, 2, 3, 1, 2, 4, 5, 5, 6], 4))
+solution = Solution().findKthLargest
+solution([3, 2, 1, 5, 6, 4], 2)
+solution([3, 2, 3, 1, 2, 4, 5, 5, 6], 4)
