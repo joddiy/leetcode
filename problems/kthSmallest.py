@@ -1,41 +1,51 @@
-from utils.tools import *
+from tools import *
 
 
-# O(H + k)
-def solution(root, k):
-    found = None
+class Solution(object):
+    @print_
+    @tree_node
+    def kthSmallest(self, root, k):
+        """
+        :type root: TreeNode
+        :type k: int
+        :rtype: int
+        """
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            if isinstance(node, TreeNode):
+                stack.extend([node.right, node.val, node.left])
+            elif isinstance(node, int):
+                k -= 1
+                if k == 0:
+                    return node
 
-    def recursive(root, i):
-        nonlocal found
-        if not root:
-            return i
-        i = recursive(root.left, i) + 1
-        if i == k:
-            found = root.val
-            return i
-        elif found is not None:
-            return i
-        elif i < k:
-            return recursive(root.right, i)
+    @print_
+    @tree_node
+    def kthSmallest(self, root, k):
+        """
+        :type root: TreeNode
+        :type k: int
+        :rtype: int
+        """
+        self.ret = None
+        self.k = k
+        def dfs(node):
+            if self.k <= 0 or not node:
+                return
+            dfs(node.left)
+            self.k -= 1
+            if self.k == 0:
+                self.ret = node.val
+                return
+            dfs(node.right)
 
-    recursive(root, 0)
-    return found
-
-
-# O(H + k)
-def solution(root, k):
-    stack = []
-    while True:
-        while root:
-            stack.append(root)
-            root = root.left
-        root = stack.pop()
-        k -= 1
-        if not k:
-            return root.val
-        root = root.right
+        dfs(root)
+        return self.ret
 
 
-# print(solution(stringToTreeNode("[3,1,4,null,2]"), 1))
-print(solution(stringToTreeNode("[3]"), 1))
-# print(solution(stringToTreeNode("[5,3,6,2,4,null,null,1]"), 3))
+solution = Solution().kthSmallest
+
+solution("[3,1,4,null,2]", 1)
+solution("[5,3,6,2,4,null,null,1]", 3)
+solution("[3]", 1)

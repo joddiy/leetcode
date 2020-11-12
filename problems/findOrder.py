@@ -4,7 +4,7 @@ from collections import defaultdict
 
 class Solution(object):
     @print_
-    def canFinish(self, numCourses, prerequisites):
+    def findOrder(self, numCourses, prerequisites):
         """
         :type numCourses: int
         :type prerequisites: List[List[int]]
@@ -15,6 +15,8 @@ class Solution(object):
             graph_[t1].append(t2)
 
         visited = [0] * numCourses
+
+        ret = []
 
         def dfs(i):
             if visited[i] == -1:
@@ -27,18 +29,22 @@ class Solution(object):
                 if not dfs(j):
                     return False
 
+            ret.append(i)
             visited[i] = 1
             return True
 
         for i in list(graph_.keys()):
             if not dfs(i):
-                return False
+                return []
 
-        return True
+        for i in range(numCourses):
+            if i not in graph_:
+                ret.insert(0, i)
+        return ret
 
-
-solution = Solution().canFinish
+solution = Solution().findOrder
 
 solution(2, [[1, 0]])
 solution(2, [[1, 0], [0, 1]])
 solution(4, [[1, 0], [2, 0], [3, 1], [3, 2]])
+solution(1, [])

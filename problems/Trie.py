@@ -1,17 +1,18 @@
-class TrieNode():
+from collections import defaultdict
 
-    def __init__(self, val):
-        self.next = [None] * 26
-        self.val = val
+
+class TrieNode(object):
+    def __init__(self):
+        self.store = False
+        self.next = defaultdict(TrieNode)
 
 
 class Trie(object):
-
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self.root = TrieNode(False)
+        self.root = TrieNode()
 
     def insert(self, word):
         """
@@ -19,13 +20,10 @@ class Trie(object):
         :type word: str
         :rtype: None
         """
-        node = self.root
-        for w in word:
-            idx = ord(w) - ord('a')
-            if not node.next[idx]:
-                node.next[idx] = TrieNode(False)
-            node = node.next[idx]
-        node.val = True
+        tmp = self.root
+        for c in word:
+            tmp = tmp.next[c]
+        tmp.store = True
 
     def search(self, word):
         """
@@ -33,13 +31,14 @@ class Trie(object):
         :type word: str
         :rtype: bool
         """
-        node = self.root
-        for w in word:
-            idx = ord(w) - ord('a')
-            if not node.next[idx]:
+        tmp = self.root
+        for c in word:
+            if c in tmp.next:
+                tmp = tmp.next[c]
+            else:
                 return False
-            node = node.next[idx]
-        return node.val
+        return tmp.store
+
 
     def startsWith(self, prefix):
         """
@@ -47,14 +46,13 @@ class Trie(object):
         :type prefix: str
         :rtype: bool
         """
-        node = self.root
-        for w in prefix:
-            idx = ord(w) - ord('a')
-            if not node.next[idx]:
+        tmp = self.root
+        for c in prefix:
+            if c in tmp.next:
+                tmp = tmp.next[c]
+            else:
                 return False
-            node = node.next[idx]
         return True
-
 
 # Your Trie object will be instantiated and called as such:
 obj = Trie()
