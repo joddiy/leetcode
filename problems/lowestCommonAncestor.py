@@ -1,29 +1,31 @@
-from utils.tools import *
+from tools import *
 
 
-def solution(root, p, q):
-    low_desc = None
+class Solution(object):
+    @print_
+    @tree_node
+    def lowestCommonAncestor(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+        self.ret = None
 
-    def recursive(root):
-        nonlocal low_desc
-        if not root:
-            return 0
-        ret = recursive(root.left)
-        if ret < 2:
-            ret += recursive(root.right)
-        if root.val in (q.val, p.val):
-            ret += 1
-        if ret == 2 and not low_desc:
-            low_desc = root
-        return ret
+        def dfs(root):
+            if not root:
+                return False
+            result = [dfs(root.left), dfs(root.right), root.val in (q, p)]
+            if sum(result) == 2 and self.ret is None:
+                self.ret = root.val
+            return max(result)
 
-    recursive(root)
-    return low_desc
+        dfs(root)
+        return self.ret
 
 
-print(
-    solution(stringToTreeNode("[3,5,1,6,2,0,8,null,null,7,4]"), ListNode(5),
-             ListNode(1)).val)
-print(
-    solution(stringToTreeNode("[3,5,1,6,2,0,8,null,null,7,4]"), ListNode(5),
-             ListNode(4)).val)
+solution = Solution().lowestCommonAncestor
+solution("[3,5,1,6,2,0,8,null,null,7,4]", 5, 1)
+solution("[3,5,1,6,2,0,8,null,null,7,4]", 5, 4)
+solution("[1,2]", 1, 2)
