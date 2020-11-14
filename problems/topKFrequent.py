@@ -1,21 +1,31 @@
-from collections import defaultdict
+from collections import defaultdict, Counter
 import heapq
+from tools import *
 
 
-def solution(nums, k):
-    hash_map = defaultdict(int)
-    for num in nums:
-        hash_map[num] += 1
-    ret = []
-    i = 0
-    for key, val in hash_map.items():
-        if i < k:
-            heapq.heappush(ret, (val, key))
-        else:
-            heapq.heappushpop(ret, (val, key))
-        i += 1
-    return [v for k, v in ret]
+class Solution(object):
+    @print_
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        count = defaultdict(int)
+        for num in nums:
+            count[num] += 1
+        heap_ = []
+        i = 0
+        for key, val in count.items():
+            if i < k:
+                heapq.heappush(heap_, (val, key))
+            else:
+                heapq.heappushpop(heap_, (val, key))
+            i += 1
+        return [v for k, v in heap_]
 
 
-print(solution([1, 1, 1, 2, 2, 3], 2))
-print(solution([1], 1))
+solution = Solution().topKFrequent
+
+solution([1, 1, 1, 2, 2, 3], 2)
+# solution([1], 1)
