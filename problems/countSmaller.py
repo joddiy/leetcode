@@ -1,5 +1,5 @@
 from tools import *
-
+import bisect
 
 class Solution(object):
     # O(n^2)
@@ -9,6 +9,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[int]
         """
+        
         n = len(nums)
         ret = []
         for i in range(n):
@@ -42,7 +43,7 @@ class Solution(object):
         sort(list(enumerate(nums)))
         return smaller
 
-    # O(n^logn) stable sort(merge sort)
+    # O(n^logn) stable sort(insert sort + binary serach)
     @print_
     def countSmaller(self, nums):
         """
@@ -53,8 +54,10 @@ class Solution(object):
         n = len(nums)
         output = [0] * n
         for i in range(n - 1, -1, -1):
+            # bineary search to check the number of smaller value
             output[i] = bisect.bisect_left(temp, nums[i])
-            temp[output[i]:output[i]] = [nums[i]]
+            # insert
+            temp.insert(output[i], nums[i])
         return output
 
 
