@@ -1,31 +1,66 @@
 from tools import *
 
 
-@print_
-def longestPalindrome(s):
-    """
-    :type s: str
-    :rtype: int
-    """
-    n, m = len(s), len(s)  # length, start
-    dp = [[0] * m for _ in range(n + 1)]
-    max_ = 0
-    max_s = ""
-    for i in range(1, n + 1):  # length
-        for j in range(0, n - i + 1):  # start
-            if i == 1:
-                dp[i][j] = 1
-            elif i == 2 and s[j] == s[j + 1]:
-                dp[i][j] = 2
-            elif s[j] == s[j + i - 1] and dp[i - 2][j + 1]:
-                dp[i][j] = dp[i - 2][j + 1] + 2
-            if dp[i][j] > max_:
-                max_ = dp[i][j]
-                max_s = s[j:j + i]
-    return max_s
+class Solution(object):
+    # O(n^2), dp
+    @print_
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        n = len(s)
+        max_ = 0
+        ret = ""
+        dp = [[0] * n for _ in range(n + 1)]  # length * start_point
+        for l in range(1, n + 1):  # length from 1 to n
+            for i in range(n - l + 1):  # start point from 0 to n-l
+                if l == 1:
+                    dp[l][i] = 1
+                elif l == 2 and s[i] == s[i + 1]:
+                    dp[l][i] = 2
+                elif s[i] == s[i + l - 1] and dp[l - 2][i + 1]:
+                    dp[l][i] = dp[l - 2][i + 1] + 2
+                if dp[l][i] > max_:
+                    max_ = dp[l][i]
+                    ret = s[i:i + l]
+        return ret
+
+    # O(n^2)?, slide window
+    @print_
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        # for example, for 'a, bab, bbabb'
+        # at the 'bab', we update maxlength as 3
+        # at the 'bbabb', we update maxlength as 5
+        # ffor 'aa, baab, bbaabb'
+        # at the 'aa', we update maxlength as 2
+        # at the 'baab', we update maxlength as 4
+        # at the 'bbaabb', we update maxlength as 6
+        if len(s) < 2 or s == s[::-1]:
+            return s
+        start, maxlength = 0, 1
+        for i in range(len(s)):
+            odd = s[i - maxlength - 1:i + 1] # 2 + maxlength
+            even = s[i - maxlength:i + 1] # 1 + maxlength
+            if i - maxlength - 1 >= 0 and odd == odd[::-1]:
+                start = i - maxlength - 1
+                maxlength += 2
+                print('odd', end="")
+            elif i - maxlength >= 0 and even == even[::-1]:
+                start = i - maxlength
+                maxlength += 1
+                print('even', end="")
+            print(i, odd, even, start, maxlength)
+        return s[start:start + maxlength]
 
 
-longestPalindrome("babad")
-longestPalindrome("cbbd")
-longestPalindrome("a")
-longestPalindrome("ac")
+solution = Solution().longestPalindrome
+
+solution("dbbabbad")
+# solution("cbbd")
+# solution("a")
+# solution("ac")

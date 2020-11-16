@@ -1,36 +1,39 @@
 from tools import *
-from heapq import *
-
-@print_
-@list_node
-def mergeKLists(lists):
-    """
-    :type lists: List[ListNode]
-    :rtype: ListNode
-    """
-    ret = ListNode(None)
-    head = ret
-    heap_ = []
-    for i in lists:
-        if i:
-            heap_.append((i.val, i))
-    heapify(heap_)
-    while heap_:
-        _, node = heappop(heap_)
-        if node.next:
-            tmp_ = node.next
-            heappush(heap_, (tmp_.val, tmp_))
-        ret.next = node
-        ret = ret.next
-    return head.next
+import heapq
 
 
-mergeKLists([
+class Solution(object):
+    @print_
+    @list_node
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        ret = ListNode(None)
+        head = ret
+        heap_ = [(l.val, l) for l in lists if l]
+        heapq.heapify(heap_)
+        while heap_:
+            _, node = heapq.heappop(heap_)
+            head.next = node
+            if node.next:
+                heapq.heappush(heap_, (node.next.val, node.next))
+            head = head.next
+        return ret.next
+
+
+solutin = Solution().mergeKLists
+
+solutin([
     stringToListNode("[1,4,5]"),
     stringToListNode("[1,3,4]"),
     stringToListNode("[2,6]"),
 ])
-mergeKLists([
-    stringToListNode("[]")
+solutin([
+    stringToListNode("[1,4,5]"),
+    stringToListNode("[1,3,4]"),
+    stringToListNode("[]"),
 ])
-mergeKLists([])
+solutin([stringToListNode("[]")])
+solutin([])

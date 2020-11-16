@@ -1,27 +1,28 @@
 from tools import *
 
 
-@print_
-def generateParenthesis(n):
-    """
-    :type n: int
-    :rtype: List[str]
-    """
-    ret = []
+class Solution(object):
+    @print_
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        ret = []
 
-    def recursive(l, ll, s):
-        if l == 0 and ll == 0:
-            ret.append(s)
-            return
-        if l > 0:
-            recursive(l - 1, ll + 1, s + "(")
-        if ll > 0:
-            recursive(l, ll - 1, s + ")")
+        def recursive(l, r, prefix):
+            if l == 0 and r == 0:
+                ret.append(prefix)
+            if l > 0:
+                recursive(l - 1, r + 1, prefix + "(")
+            if r > 0:
+                recursive(l, r - 1, prefix + ")")
 
-    recursive(n, 0, "")
-    return ret
+        recursive(n, 0, "")
+        return ret
 
 
-generateParenthesis(3)
-generateParenthesis(1)
+solution = Solution().generateParenthesis
 
+solution(3)
+solution(1)
