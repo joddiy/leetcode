@@ -1,25 +1,28 @@
 from tools import *
 
 
-@print_
-def permute(nums):
-    """
-    :type nums: List[int]
-    :rtype: List[List[int]]
-    """
-    if not nums:
-        return []
-    ret = []
+class Solution(object):
+    @print_
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        ret = []
 
-    def recursive(current, remaining):
-        if not remaining:
-            ret.append(current)
-        for i in range(len(remaining)):
-            recursive(current + [remaining[i]],
-                      remaining[:i] + remaining[i + 1:])
+        def recusive(remaining, prefix):
+            if not remaining:
+                ret.append(prefix)
+            else:
+                for i in range(len(remaining)):
+                    recusive(remaining[0:i] + remaining[i + 1:],
+                             prefix + [remaining[i]])
 
-    recursive([], nums)
-    return ret
+        recusive(nums, [])
+        return ret
 
 
-permute([1, 2, 3])
+solution = Solution().permute
+
+solution([1, 2, 3])
+solution([])

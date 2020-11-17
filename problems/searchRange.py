@@ -1,42 +1,45 @@
 from tools import *
 
 
-@print_
-def searchRange(nums, target):
-    """
-    :type nums: List[int]
-    :type target: int
-    :rtype: List[int]
-    """
-    if not nums:
-        return (-1, -1)
+class Solution(object):
+    @print_
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        if not nums:
+            return (-1, -1)
 
-    # find the first value which is larger
-    # or equal than target
-    def searchLeft(i, j):
-        if j < i:
-            return i
-        m = (i + j) // 2
-        if nums[m] < target:
-            return searchLeft(m + 1, j)
-        else:
-            return searchLeft(i, m - 1)
+        n = len(nums)
 
-    # find the first value which is less
-    # or equal than target
-    def searchRight(i, j):
-        if j < i:
-            return j
-        m = (i + j) // 2
-        if nums[m] > target:
-            return searchRight(i, m - 1)
-        else:
-            return searchRight(m + 1, j)
+        def find_left(i, j):
+            if i > j:
+                return i
+            else:
+                m = (i + j) // 2
+                if nums[m] >= target:
+                    return find_left(i, m - 1)
+                else:
+                    return find_left(m + 1, j)
 
-    l, r = searchLeft(0, len(nums) - 1), searchRight(0, len(nums) - 1)
-    return (l, r) if l <= r else (-1, -1)
+        def find_right(i, j):
+            if i > j:
+                return j
+            else:
+                m = (i + j) // 2
+                if nums[m] <= target:
+                    return find_right(m + 1, j)
+                else:
+                    return find_right(i, m - 1)
+
+        l, r = find_left(0, n - 1), find_right(0, n - 1)
+        return (l, r) if l <= r else (-1, -1)
 
 
-searchRange([5, 7, 7, 8, 8, 10], 8)
-searchRange([5, 7, 7, 8, 8, 10], 6)
-searchRange([], 0)
+solution = Solution().searchRange
+
+solution([5, 7, 7, 8, 8, 10], 8)
+solution([5, 7, 7, 8, 8, 10], 6)
+solution([], 0)

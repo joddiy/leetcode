@@ -1,5 +1,6 @@
 from tools import *
 
+
 class Solution(object):
     @print_
     def merge(self, intervals):
@@ -8,17 +9,18 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         if not intervals:
-            return []
-        intervals.sort(key=lambda  x: x[0])
-        ret = [intervals[0]]
-        for i in range(1, len(intervals)):
-            int_ = intervals[i]
-            if int_[0] <= ret[-1][1]:
-                ret[-1][1] = max(int_[1], ret[-1][1])
+            return intervals
+        intervals = sorted(intervals, key=lambda x: x[0])
+        ret = [intervals.pop(0)]
+        for tmp in intervals:
+            if tmp[0] <= ret[-1][1]:
+                if tmp[1] <= ret[-1][1]:
+                    continue
+                else:
+                    ret[-1][1] = tmp[1]
             else:
-                ret.append(int_)
+                ret.append(tmp)
         return ret
-        
 
 solution = Solution().merge
 solution([[2, 6], [1, 3], [8, 10], [15, 18]])
