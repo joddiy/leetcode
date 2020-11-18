@@ -10,15 +10,17 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
-        def valid(root, low, high):
+        def recusive(root, upper, low):
             if not root:
                 return True
-            if root.val <= low or root.val >= high:
+            elif low < root.val < upper and recusive(
+                    root.left, root.val, low) and recusive(
+                        root.right, upper, root.val):
+                return True
+            else:
                 return False
-            return valid(root.left, low, root.val) and valid(
-                root.right, root.val, high)
 
-        return valid(root, -sys.maxsize, sys.maxsize)
+        return recusive(root, sys.maxsize, -sys.maxsize)
 
 
 solution = Solution().isValidBST

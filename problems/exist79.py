@@ -10,29 +10,31 @@ class Solution(object):
         :rtype: bool
         """
         m, n = len(board), len(board[0])
-        s = len(word)
+        l = len(word)
 
-        def recursive(i, j, idx):
-            if idx == s:
+        def find(i, j, idx):
+            if idx == l:
                 return True
-            board[i][j] = "#"
-            if i - 1 >= 0 and board[i - 1][j] == word[idx] and recursive(
-                    i - 1, j, idx + 1):
-                return True
-            if j - 1 >= 0 and board[i][j - 1] == word[idx] and recursive(
-                    i, j - 1, idx + 1):
-                return True
-            if i + 1 <= m - 1 and board[i + 1][j] == word[idx] and recursive(
-                    i + 1, j, idx + 1):
-                return True
-            if j + 1 <= n - 1 and board[i][j + 1] == word[idx] and recursive(
-                    i, j + 1, idx + 1):
-                return True
-            board[i][j] = word[idx - 1]
+            else:
+                board[i][j] = '#'
+                if i - 1 >= 0 and board[i - 1][j] == word[idx] and find(
+                        i - 1, j, idx + 1):
+                    return True
+                if i + 1 < m and board[i + 1][j] == word[idx] and find(
+                        i + 1, j, idx + 1):
+                    return True
+                if j - 1 >= 0 and board[i][j - 1] == word[idx] and find(
+                        i, j - 1, idx + 1):
+                    return True
+                if j + 1 < n and board[i][j + 1] == word[idx] and find(
+                        i, j + 1, idx + 1):
+                    return True
+                board[i][j] = word[idx - 1]
+                return False
 
         for i in range(m):
             for j in range(n):
-                if board[i][j] == word[0] and recursive(i, j, 1):
+                if board[i][j] == word[0] and find(i, j, 1):
                     return True
         return False
 

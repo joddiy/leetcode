@@ -10,16 +10,15 @@ class Solution(object):
         :type inorder: List[int]
         :rtype: TreeNode
         """
-        map_ = {i: idx for idx, i in enumerate(inorder)}
+        map_ = {v: i for i, v in enumerate(inorder)}
 
         def build(i, j):
             if i > j:
                 return None
-            val = preorder.pop(0)
-            root = TreeNode(val)
-            m = map_[val]
-            root.left = build(i, m - 1)
-            root.right = build(m + 1, j)
+            v = inorder.pop(0)
+            root = TreeNode(v)
+            root.left = build(i, map_[v] - 1)
+            root.right = build(map_[v] + 1, j)
             return root
 
         return build(0, len(preorder) - 1)
