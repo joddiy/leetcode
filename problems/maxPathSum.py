@@ -1,25 +1,32 @@
-from utils.tools import *
+from tools import *
 import sys
 
 
-def solution(root):
-    max_v = -sys.maxsize
+class Solution(object):
+    @print_
+    @tree_node
+    def maxPathSum(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        self.ret = -sys.maxsize
 
-    def recursive(root):
-        nonlocal max_v
-        if not root:
-            return 0
-        else:
-            left = recursive(root.left)
-            right = recursive(root.right)
-            max_v = max(max_v, left + right + root.val)
-            return max(left + root.val, right + root.val, 0)
+        def dfs(root):
+            if not root:
+                return 0
+            sum_l, sum_r = dfs(root.left), dfs(root.right)
+            self.ret = max(self.ret, root.val + sum_l + sum_r)
+            return max(root.val + sum_l, root.val + sum_r, 0)
 
-    recursive(root)
-    return max_v
+        dfs(root)
+
+        return self.ret
 
 
-# print(solution(stringToTreeNode("[1,2,3]")))
-# print(solution(stringToTreeNode("[1,2,-3]")))
-print(solution(stringToTreeNode("[-10,9,20,null,null,15,7]")))
-print(solution(stringToTreeNode("[-3]")))
+solution = Solution().maxPathSum
+
+solution("[1,2,3]")
+solution("[1,2,-3]")
+solution("[-10,9,20,null,null,15,7]")
+solution("[-3]")
