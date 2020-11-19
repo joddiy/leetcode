@@ -37,10 +37,15 @@ class Solution(object):
 
         ret = set()
         for word in words:
+            found = False
             for i in range(m):
                 for j in range(n):
                     if board[i][j] == word[0] and recursive(i, j, 1, word):
                         ret.add(word)
+                        found = True
+                        break
+                if found:
+                    break
         return list(ret)
 
 
