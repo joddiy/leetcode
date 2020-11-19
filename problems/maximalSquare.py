@@ -1,21 +1,30 @@
-def solution(matrix):
-    if not matrix or not matrix[0]:
-        return 0
-
-    dp = [[int(x) for x in row] for row in matrix]
-    max_v = 0
-    for i in range(len(matrix)):
-        for j in range(len(matrix[0])):
-            if i == 0 or j == 0:
-                max_v = max(max_v, dp[i][j])
-            elif matrix[i][j] == "1":
-                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1
-                max_v = max(max_v, dp[i][j])
-            else:
-                dp[i][j] == 0
-    return max_v**2
+from tools import *
 
 
-print(
-    solution([["1", "0", "1", "0", "0"], ["1", "0", "1", "1", "1"],
-              ["1", "1", "1", "1", "1"], ["1", "0", "0", "1", "0"]]))
+class Solution(object):
+    @print_
+    def maximalSquare(self, matrix):
+        """
+        :type matrix: List[List[str]]
+        :rtype: int
+        """
+        if not matrix or not matrix[0]:
+            return 0
+
+        m, n = len(matrix), len(matrix[0])
+        dp = [[0] * n for _ in range(m)]
+        max_ = 0
+        for i in range(m):
+            for j in range(n):
+                if i == 0 or j == 0:
+                    dp[i][j] = int(matrix[i][j])
+                elif matrix[i][j] == "1":
+                    dp[i][j] = min(dp[i - 1][j], dp[i][j - 1],
+                                   dp[i - 1][j - 1]) + 1
+                max_ = max(max_, dp[i][j])
+        return max_ ** 2
+
+solution = Solution().maximalSquare
+
+solution([["1", "0", "1", "0", "0"], ["1", "0", "1", "1", "1"],
+          ["1", "1", "1", "1", "1"], ["1", "0", "0", "1", "0"]])

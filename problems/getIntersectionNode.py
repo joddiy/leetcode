@@ -1,45 +1,48 @@
-from utils.tools import *
+from tools import *
+import time
 
 
-def solution(headA, headB):
-    if not headA or not headB:
-        return None
-    nodeA = headA
-    nodeB = headB
-    while nodeA is not nodeB:
-        if not nodeA and nodeB:
+class Solution(object):
+    @print_
+    @list_node
+    def getIntersectionNode(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        if not headA or not headB:
             return None
-        if nodeA.next is None:
-            nodeA = headB
-        else:
-            nodeA = nodeA.next
-        if nodeB.next is None:
-            nodeB = headA
-        else:
-            nodeB = nodeB.next
-    return nodeA
+
+        p, q = headA, headB
+
+        # len is equal, found at first iteration
+        # len not equal, found at second iteration
+        while p is not q:
+            p = p.next if p else headB
+            q = q.next if q else headA
+
+        return q
 
 
-def solution(headA, headB):
+solution = Solution().getIntersectionNode
 
-    def len(head):
-        ret = 0
-        while head:
-            ret += 1
-            head = head.next
-        return ret
+l1 = ListNode(1)
+l2 = ListNode(2)
+l3 = ListNode(3)
+l4 = ListNode(4)
+l5 = ListNode(5)
+l6 = ListNode(6)
+l7 = ListNode(7)
+l8 = ListNode(8)
 
-    lenA, lenB = len(headA), len(headB)
-    diff = abs(lenA - lenB)
+l1.next = l2
+l2.next = l3
+l3.next = l7
 
-    if lenA > lenB:
-        for _ in range(diff):
-            headA = headA.next
-    else:
-        for _ in range(diff):
-            headB = headB.next
+l4.next = l5
+l5.next = l6
+l6.next = l7
 
-    while headA != headB:
-        headA = headA.next
-        headB = headB.next
-    return headA
+l7.next = l8
+
+solution(headA=l1, headB=l4)
