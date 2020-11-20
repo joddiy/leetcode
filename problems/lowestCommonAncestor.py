@@ -14,7 +14,7 @@ class Solution(object):
         self.ret = None
 
         def dfs(root):
-            if not root:
+            if self.ret is not None or not root:
                 return False
             result = [dfs(root.left), dfs(root.right), root.val in (q, p)]
             if sum(result) == 2 and self.ret is None:

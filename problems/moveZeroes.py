@@ -39,6 +39,7 @@ class Solution(object):
         if n == 0 or n == 1:
             return nums
         i = 0
+        # i is the fist zero
         while i < n and nums[i] != 0:
             i += 1
         for j in range(i + 1, n):
