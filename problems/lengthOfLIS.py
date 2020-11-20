@@ -45,6 +45,7 @@ class Solution(object):
         dp = [0] * len(nums)
         size = 0
         for n in nums:
+            # binary search
             i, j = 0, size
             while i < j:
                 m = (i + j) // 2

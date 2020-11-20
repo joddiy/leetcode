@@ -22,6 +22,8 @@ class Solution(object):
                     dp[i] = 1
                 elif i - c > 0 and dp[i - c] > 0:
                     dp[i] = min(dp[i], dp[i - c] + 1)
+                else:
+                    break
         return -1 if dp[-1] > amount else dp[-1]
 
     @print_
@@ -31,39 +33,48 @@ class Solution(object):
         :type amount: int
         :rtype: int
         """
+
         if len(coins) == 0:
             return -1
+
         if amount == 0:
             return 0
 
-        self.coins = sorted(set(coins), reverse=True)
+        self.ret = amount + 1
 
-        def helper(curAmount, curCount, i):
-            # result is larger than min, continue
-            if curCount + (curAmount - 1) / self.coins[i] + 1 >= self.result:
-                return
-            # current amount can be divided coins, update
-            if curAmount % self.coins[i] == 0:
-                self.result = min(self.result,
-                                  curCount + curAmount // self.coins[i])
+        n = len(coins)
+        self.coins = sorted(coins, reverse=True)
+
+        def dfs(cur_amount, cur_count, idx):
+            if idx >= n or cur_amount < 0:
                 return
 
-            # try use the biggest coin first
-            if curAmount > self.coins[i]:
-                helper(curAmount - self.coins[i], curCount + 1, i)
-            # else try not to use the biggest coin
-            if i < len(self.coins) - 1:
-                helper(curAmount, curCount, i + 1)
+            coin = self.coins[idx]
+            # if max amount by current coin larger than ret
+            if cur_count + cur_amount // coin + (cur_amount % coin !=
+                                                 0) >= self.ret:
+                return
 
-        self.result = amount + 1
-        helper(amount, 0, 0)
-        if self.result == amount + 1:
+            # if amount can be divided by current coin
+            if cur_amount % coin == 0:
+                self.ret = min(self.ret, cur_count + cur_amount // coin)
+                return
+
+            # try biggest coin
+            dfs(cur_amount - coin, cur_count + 1, idx)
+
+            # try next coin
+            dfs(cur_amount, cur_count, idx + 1)
+
+        dfs(amount, 0, 0)
+        if self.ret == amount + 1:
             return -1
         else:
-            return self.result
+            return self.ret
 
 
 solution = Solution().coinChange
-solution([1, 2, 5], 11)
-solution([2], 3)
-solution([1], 0)
+# solution([1, 2, 5], 11)
+# solution([2], 3)
+# solution([1], 0)
+solution([1], 1)
