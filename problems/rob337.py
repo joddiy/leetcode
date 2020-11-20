@@ -1,20 +1,27 @@
-from utils.tools import *
+from tools import *
 
 
-def solution(root):
+class Solution(object):
+    @print_
+    @tree_node
+    def rob(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        def dfs(root):
+            if not root:
+                return 0, 0
+            lr, lnr = dfs(root.left)
+            rr, rnr = dfs(root.right)
+            r = lnr + rnr + root.val
+            nr = max(lr, lnr) + max(rr, rnr)
+            return r, nr
 
-    def recursive(root):
-        if not root:
-            return 0, 0
-
-        l_rob, l_not_rob = recursive(root.left)
-        r_rob, r_not_rob = recursive(root.right)
-        rob = l_not_rob + r_not_rob + root.val
-        not_rob = max(l_rob, l_not_rob) + max(r_rob, r_not_rob)
-        return rob, not_rob
-
-    return max(recursive(root))
+        return max(dfs(root))
 
 
-print(solution(stringToTreeNode("[3,2,3,null,3,null,1]")))
-print(solution(stringToTreeNode("[3,4,5,1,3,null,1]")))
+solution = Solution().rob
+
+solution("[3,2,3,null,3,null,1]")
+solution("[3,4,5,1,3,null,1]")
