@@ -1,21 +1,28 @@
-from utils.tools import *
+from tools import *
 
 
-def solution(root):
+class Solution(object):
+    @print_
+    @tree_node
+    def diameterOfBinaryTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        self.ret = 0
 
-    def recusive(root):
-        nonlocal ret
-        if not root:
-            return 0, 0
+        def dfs(root):
+            if not root:
+                return 0
 
-        l = recusive(root.left)
-        r = recusive(root.right)
-        ret = max(ret, max(l) + max(r))
-        return max(l) + 1, max(r) + 1
+            l = dfs(root.left)
+            r = dfs(root.right)
+            self.ret = max(self.ret, l + r)
+            return max(l, r) + 1
 
-    ret = 0
-    recusive(root)
-    return ret
+        dfs(root)
+        return self.ret
 
 
-print(solution(stringToTreeNode("[1,2,3,4,5]")))
+solution = Solution().diameterOfBinaryTree
+solution("[1,2,3,4,5]")

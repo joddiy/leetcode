@@ -1,22 +1,33 @@
-from utils.tools import *
+from tools import *
 
 
-def solution(root, target):
+class Solution(object):
+    @print_
+    @tree_node
+    def pathSum(self, root, sum):
+        """
+        :type root: TreeNode
+        :type sum: int
+        :rtype: int
+        """
+        self.ret = 0
+        memo = {0: 1}
 
-    def recursive(root, cur_sum):
-        if root:
-            nonlocal ret
+        def dfs(root, cur_sum):
+            if not root:
+                return
+
             cur_sum += root.val
-            ret += cache.get(cur_sum - target, 0)
-            cache[cur_sum] = cache.get(cur_sum, 0) + 1
-            recursive(root.left, cur_sum)
-            recursive(root.right, cur_sum)
-            cache[cur_sum] -= 1
+            self.ret += memo.get(cur_sum - sum, 0)
+            memo[cur_sum] = memo.get(cur_sum, 0) + 1
+            dfs(root.left, cur_sum)
+            dfs(root.right, cur_sum)
+            memo[cur_sum] -= 1
 
-    ret = 0
-    cache = {0: 1}
-    recursive(root, 0)
-    return ret
+        dfs(root, 0)
+        return self.ret
 
 
-print(solution(stringToTreeNode("[10,5,-3,3,2,null,11,3,-2,null,1]"), 8))
+solution = Solution().pathSum
+
+solution("[10,5,-3,3,2,null,11,3,-2,null,1]", 8)
