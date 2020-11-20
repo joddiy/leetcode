@@ -22,8 +22,8 @@ class Solution(object):
             ret.append(max_)
         return ret
 
-    @print_
     # O(n) deque, 
+    @print_
     def maxSlidingWindow(self, nums, k):
         """
         :type nums: List[int]
