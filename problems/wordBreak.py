@@ -9,11 +9,13 @@ class Solution(object):
         :type wordDict: List[str]
         :rtype: bool
         """
-        dp = [True] + [False] * len(s)
-        for i in range(len(s)):
+        dp = [False] * (len(s) + 1)
+        dp[0] = True
+        for i in range(1, len(s) + 1):
             for w in wordDict:
-                if i >= len(w) - 1 and s[i + 1 - len(w):i + 1] == w:
-                    dp[i + 1] = dp[i + 1] or dp[i + 1 - len(w)]
+                if i - len(w) >= 0 and s[i-len(w):i] == w and dp[i - len(w)]:
+                    dp[i] = True
+
         return dp[-1]
 
 

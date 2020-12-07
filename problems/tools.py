@@ -294,6 +294,35 @@ def getLCS2(str1, str2):
     return dp[-1][-1]
 
 
+# 快排
+def partition(arr, low, high):
+    m = (low + high) // 2
+    # swap the mid with first
+    arr[low], arr[m] = arr[m], arr[low]
+    pivot = low
+    index = pivot + 1 # the first value larger than pivot
+    i = index
+    while i <= high:
+        if arr[i] < arr[pivot]:
+            arr[index], arr[i] = arr[i], arr[index]
+            index += 1
+        i += 1
+    # swap the pivot to the index - 1
+    arr[pivot], arr[index-1] = arr[index-1], arr[pivot]
+    return index-1
+
+def quicksort(arr, low, high):
+    if low > high:
+        return
+
+    pi = partition(arr, low, high)
+    quicksort(arr, low, pi-1)
+    quicksort(arr, pi+1, high)
+    return arr
+
+return quicksort(arr, 0, len(arr)-1)
+
+
 def print_array(arr):
     for i in range(len(arr)):
         print(arr[i])

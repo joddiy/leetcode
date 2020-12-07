@@ -12,29 +12,26 @@ class Solution(object):
         n, m = len(s), len(p)
         memo = {}
 
-        def recusive(i, j):
-            if i == n and j == m:
-                return True
-            elif i != n and j == m:
-                return False
+        def match(i, j):
+            if j == m:
+                return i == n
             elif (i, j) not in memo:
-                first_match = i < n and p[j] in (".", s[i])
+                first_match = i < n and p[j] in (s[i], '.')
                 # with '*'
                 if j + 1 < m and p[j + 1] == '*':
                     if first_match:
-                        res = recusive(i, j + 2) or recusive(i + 1, j)
+                        res = match(i, j + 2) or match(i + 1, j)
                     else:
-                        res = recusive(i, j + 2)
-                # without '*'
-                else:
+                        res = match(i, j + 2)
+                else:  # without '*'
                     if first_match:
-                        res = recusive(i + 1, j + 1)
+                        res = match(i + 1, j + 1)
                     else:
                         res = False
                 memo[i, j] = res
             return memo[i, j]
 
-        return recusive(0, 0)
+        return match(0, 0)
 
 
 solution = Solution().isMatch

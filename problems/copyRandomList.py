@@ -16,28 +16,25 @@ class Solution(object):
         :type head: Node
         :rtype: Node
         """
-        node_map = defaultdict(Node)
+        map_ = defaultdict(Node)
 
-        def build(head):
-            if not head:
+        def build(root):
+            if not root:
                 return None
-            head_ = Node(head.val)
-            node_map[head] = head_
-            next_ = head.next
+            head_ = Node(root.val)
+            map_[root] = head_
+            next_ = root.next
             if next_:
-                if next_ not in node_map:
-                    head_.next = build(head.next)
-                else:
-                    head_.next = node_map[next_]
-            random_ = head.random
+                if next_ not in map_:
+                    build(next_)
+                head_.next = map_[next_]
+            random_ = root.random
             if random_:
-                if random_ not in node_map:
-                    head_.random = build(head.random)
-                else:
-                    head_.random = node_map[random_]
-
+                if random_ not in map_:
+                    build(random_)
+                head_.random = map_[random_]
             return head_
-
+        
         return build(head)
 
     @print_

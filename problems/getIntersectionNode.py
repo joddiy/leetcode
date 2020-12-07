@@ -18,9 +18,15 @@ class Solution(object):
         # len is equal, found at first iteration
         # len not equal, found at second iteration
         while p is not q:
-            p = p.next if p else headB
-            q = q.next if q else headA
-
+            if not p:
+                p = headB
+            else:
+                p = p.next
+            if not q:
+                q = headA
+            else:
+                q = q.next
+       
         return q
 
 
