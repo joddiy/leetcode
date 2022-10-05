@@ -320,7 +320,7 @@ def quicksort(arr, low, high):
     quicksort(arr, pi+1, high)
     return arr
 
-return quicksort(arr, 0, len(arr)-1)
+# return quicksort(arr, 0, len(arr)-1)
 
 
 def print_array(arr):
