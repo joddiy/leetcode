@@ -1,3 +1,5 @@
+import pprint
+
 from tools import *
 
 
@@ -10,19 +12,24 @@ class Solution(object):
         :type n: int
         :rtype: None Do not return anything, modify nums1 in-place instead.
         """
-        # i indicates the last value of num1
-        # j indicates the last value of num2
-        # k indicates the last zero
-        i, j, k = m - 1, n - 1, m + n - 1
-        while j >= 0:
-            if i < 0 or nums1[i] <= nums2[j]:
-                nums1[k] = nums2[j]
-                j -= 1
+        tmp = [0] * len(nums1)
+        i, j, k = 0, 0, 0
+        while i < m or j < n:
+            if i == m:
+                tmp[k] = nums2[j]
+                j += 1
+            elif j == n:
+                tmp[k] = nums1[i]
+                i += 1
+            elif nums1[i] <= nums2[j]:
+                tmp[k] = nums1[i]
+                i += 1
             else:
-                nums1[k], nums1[i] = nums1[i], nums1[k]
-                i -= 1
-            k -= 1
-        pprint.pprint(nums1)
+                tmp[k] = nums2[j]
+                j += 1
+            k += 1
+        for i in range(len(nums1)):
+            nums1[i] = tmp[i]
 
 
 solution = Solution().merge
