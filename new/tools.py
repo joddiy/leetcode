@@ -179,6 +179,10 @@ def print_(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
+        if isinstance(result, ListNode):
+            result = listNodeToString(result)
+        elif isinstance(result, TreeNode):
+            result = treeNodeToString(result)
         pprint.pprint(result)
         return result
 
