@@ -10,6 +10,22 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        nums = [0] + nums
+        i, j = 0, 0
+        sum_ = 0
+        ret = len(nums) + 1
+        while j < len(nums) - 1:
+            while j < len(nums) - 1 and sum_ < target:
+                j += 1
+                sum_ += nums[j]
+            while i < j and sum_ >= target:
+                ret = min(ret, j - i)
+                i += 1
+                sum_ -= nums[i]
+        if ret == len(nums) + 1:
+            return 0
+        else:
+            return ret
 
 
 solution = Solution().minSubArrayLen
