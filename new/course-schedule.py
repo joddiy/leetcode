@@ -21,7 +21,7 @@ class Solution(object):
         visited = [0] * numCourses  # 0: not visited, -1: visited, 1: not cycle
 
         def recursive(c):
-            if visited[c] == 1:
+            if visited[c] == 1 or c not in path:
                 return True
             elif visited[c] == -1:
                 return False
