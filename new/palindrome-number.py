@@ -22,7 +22,6 @@ class Solution(object):
             int_list.append(x % 10)
             x = x // 10
 
-
         for i in range(len(int_list) // 2):
             if int_list[i] != int_list[-i - 1]:
                 return False
