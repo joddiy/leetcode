@@ -33,7 +33,7 @@ class Solution(object):
                     max_i, max_l = i, l
         return s[max_i:max_i + max_l + 1]
 
-        # solution O(n)
+        # solution 2
         # if len(s) < 2 or s == s[::-1]:
         #     return s
         # start, maxlength = 0, 1
