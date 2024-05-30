@@ -8,41 +8,25 @@ from collections import defaultdict
 
 class Solution(object):
     @print_
-    def letterCombinations(self, digits):
+    def combine(self, n, k):
         """
-        :type digits: str
-        :rtype: List[str]
+        :type n: int
+        :type k: int
+        :rtype: List[List[int]]
         """
-        if not digits:
-            return []
-
-        number_map = {
-            "1": [],
-            "2": ["a", "b", "c"],
-            "3": ["d", "e", "f"],
-            "4": ["g", "h", "i"],
-            "5": ["j", "k", "l"],
-            "6": ["m", "n", "o"],
-            "7": ["p", "q", "r", "s"],
-            "8": ["t", "u", "v"],
-            "9": ["w", "x", "y", "z"],
-        }
-
         ret = []
 
         def recursive(i, prefix):
-            if i == len(digits):
+            if len(prefix) == k:
                 ret.append(prefix)
             else:
-                n = digits[i]
-                for c in number_map[n]:
-                    recursive(i + 1, prefix + c)
+                for i in range(i, n + 1):
+                    recursive(i + 1, prefix + [i])
 
-        recursive(0, "")
+        recursive(1, [])
         return ret
 
 
-solution = Solution().letterCombinations
-solution(digits="23")
-solution(digits="")
-solution(digits="2")
+solution = Solution().combine
+solution(n=4, k=2)
+solution(n=1, k=1)
