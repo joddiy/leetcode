@@ -14,6 +14,9 @@ class Solution(object):
         :rtype: ListNode
         """
 
+        if not head:
+            return head
+
         def recursive(node):
             # todo select the pivot from the mid
             less_list = ListNode(None)
@@ -50,3 +53,4 @@ solution = Solution().sortList
 solution(head=stringToListNode("[4,2,1,3]"))
 solution(head=stringToListNode("[-1,5,3,4,0]"))
 solution(head=stringToListNode("[-1,5,3,4,0]"))
+solution(head=stringToListNode("[]"))
