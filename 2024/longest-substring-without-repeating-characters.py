@@ -14,6 +14,7 @@ class Solution(object):
         """
 
 
-
 solution = Solution().lengthOfLongestSubstring
 solution(s="abcabcbb")
+solution(s="bbbbb")
+solution(s="pwwkew")
