@@ -8,14 +8,14 @@ from collections import defaultdict
 
 class Solution(object):
     @print_
-    def snakesAndLadders(self, board):
+    def maxSubArray(self, nums):
         """
-        :type board: List[List[int]]
+        :type nums: List[int]
         :rtype: int
         """
 
 
-solution = Solution().snakesAndLadders
+solution = Solution().maxSubArray
 solution(nums=[-2, 1, -3, 4, -1, 2, 1, -5, 4])
 solution(nums=[1])
 solution(nums=[5, 4, -1, 7, 8])
