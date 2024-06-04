@@ -16,18 +16,21 @@ class Solution(object):
         :rtype: int
         """
         n = len(ratings)
-        candies = [1] * n
-
+        left = [1] * n
+        right = [1] * n
+        ret = [1] * n
         for i in range(1, n):
             if ratings[i] > ratings[i - 1]:
-                candies[i] = candies[i - 1] + 1
+                left[i] = left[i - 1] + 1
 
-        for i in range(n - 2, -1, -1):
-            if ratings[i + 1] < ratings[i]:
-                candies[i] = max(candies[i], candies[i + 1] + 1)
+        for j in range(n - 2, -1, -1):
+            if ratings[j] > ratings[j + 1]:
+                right[j] = right[j + 1] + 1
 
-        # print(candies)
-        return sum(candies)
+        for i in range(n):
+            ret[i] = max(left[i], right[i])
+
+        return sum(ret)
 
 
 solution = Solution().candy
