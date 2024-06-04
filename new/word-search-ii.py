@@ -5,54 +5,49 @@ import sys
 from tools import *
 from collections import defaultdict
 
+import heapq
 
-class Solution(object):
-    def exist(self, board, word):
-        """
-        :type board: List[List[str]]
-        :type word: str
-        :rtype: bool
-        """
+
+class TrieNode:
+    def __init__(self):
+        self.children = defaultdict(TrieNode)
+        self.isWord = False
+
+    def addWord(self, word):
+        cur = self
+        for ch in word:
+            cur = cur.children[ch]
+        cur.isWord = True
+
+
+class Solution:
+    def findWords(self, board, words):
+        root = TrieNode()
+        for word in words:
+            root.addWord(word)
+
         m, n = len(board), len(board[0])
-        ll = len(word)
-        pos = [(-1, 0), (0, 1), (1, 0), (0, -1)]
-        visited = [[0] * n for _ in range(m)]
+        res = set()
 
-        def recusive(i, j, k):
-            if k == ll:
-                return True
-            elif i < 0 or i >= m or j < 0 or j >= n or visited[i][j] == 1:
-                return False
-            else:
-                if board[i][j] == word[k]:
-                    visited[i][j] = 1
-                    for px, py in pos:
-                        if recusive(i + px, j + py, k + 1):
-                            return True
-                    visited[i][j] = 0
-                    return False
-                else:
-                    return False
+        def dfs(i, j, node=root, word=""):
+            if i < 0 or i == m or j < 0 or j == n or board[i][j] not in node.children:
+                return
+            node = node.children[board[i][j]]
+            word += board[i][j]
+            if node.isWord:
+                res.add(word)
+
+            board[i][j] = '#'
+            dfs(i + 1, j, node, word)
+            dfs(i - 1, j, node, word)
+            dfs(i, j + 1, node, word)
+            dfs(i, j - 1, node, word)
+            board[i][j] = word[-1]
 
         for i in range(m):
             for j in range(n):
-                if recusive(i, j, 0):
-                    return True
-        return False
-
-    @print_
-    def findWords(self, board, words):
-        """
-        :type board: List[List[str]]
-        :type words: List[str]
-        :rtype: List[str]
-        """
-        ret = []
-        for word in words:
-            if self.exist(board, word):
-                ret.append(word)
-
-        return ret
+                dfs(i, j)
+        return list(res)
 
 
 solution = Solution().findWords
