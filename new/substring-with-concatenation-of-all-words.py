@@ -1,6 +1,11 @@
+import math
 import pprint
+import sys
 
 from tools import *
+from collections import defaultdict, Counter
+
+import heapq
 
 
 class Solution(object):
@@ -13,7 +18,7 @@ class Solution(object):
         """
         wordLength = len(words[0])
         substrLength = wordLength * len(words)
-        expectedWordCounts = collections.Counter(words)
+        expectedWordCounts = Counter(words)
         # print('expectedWordCounts ', expectedWordCounts)
         result = []
 
@@ -34,16 +39,9 @@ class Solution(object):
 
             # Then iterate the other substrings
             # by adding a word at the end and removing the first word
-            for start in range(
-                    offset + wordLength,
-                    len(s) - substrLength + 1,
-                    wordLength,
-            ):
+            for start in range(offset + wordLength, len(s) - substrLength + 1, wordLength):
                 removedWord = s[start - wordLength: start]
-                addedWord = s[
-                            start + substrLength - wordLength:
-                            start + substrLength
-                            ]
+                addedWord = s[start + substrLength - wordLength: start + substrLength]
                 if removedWord in wordCounts:
                     wordCounts[removedWord] -= 1
                 if addedWord in wordCounts:
