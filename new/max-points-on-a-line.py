@@ -3,7 +3,7 @@ import pprint
 import sys
 
 from tools import *
-from collections import defaultdict
+from collections import Counter
 
 import heapq
 
@@ -18,15 +18,16 @@ class Solution(object):
         res = 1
         for i in range(len(points)):
             x, counts = points[i], Counter()
-            for j in range(i+1, len(points)):
+            for j in range(i + 1, len(points)):
                 y = points[j]
-                if x[0] == y[0]: # denonminator is zero, vertical line
+                if x[0] == y[0]:  # denonminator is zero, vertical line
                     slope = float('inf')
                 else:
-                    slope = (y[1]-x[1])*1.0/(y[0]-x[0])
+                    slope = (y[1] - x[1]) * 1.0 / (y[0] - x[0])
                 counts[slope] += 1
-                res = max(res, counts[slope]+1)
+                res = max(res, counts[slope] + 1)
         return res
+
 
 solution = Solution().maxPoints
 solution(points=[[1, 1], [2, 2], [3, 3]])
