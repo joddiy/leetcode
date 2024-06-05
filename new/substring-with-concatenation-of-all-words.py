@@ -16,45 +16,28 @@ class Solution(object):
         :type words: List[str]
         :rtype: List[int]
         """
-        wordLength = len(words[0])
-        substrLength = wordLength * len(words)
-        expectedWordCounts = Counter(words)
-        # print('expectedWordCounts ', expectedWordCounts)
-        result = []
+        len_w = len(words[0])
+        len_con = len_w * len(words)
+        cnt_con = Counter(words)
+        ret = []
 
-        # Trying each way to split `s`
-        # into consecutive words of length `substrLength`
-        for offset in range(wordLength):
-            wordCounts = {word: 0 for word in expectedWordCounts.keys()}
-            # print('wordCounts ', wordCounts)
-            # print('type of jawn', type(wordCounts))
-            # Start with counting words in the first substring
-            for i in range(offset, substrLength + offset, wordLength):
-                word = s[i: i + wordLength]
-                if word in wordCounts:
-                    wordCounts[word] += 1
-
-            if wordCounts == expectedWordCounts:
-                result.append(offset)
-
-            # Then iterate the other substrings
-            # by adding a word at the end and removing the first word
-            for start in range(offset + wordLength, len(s) - substrLength + 1, wordLength):
-                removedWord = s[start - wordLength: start]
-                addedWord = s[start + substrLength - wordLength: start + substrLength]
-                if removedWord in wordCounts:
-                    wordCounts[removedWord] -= 1
-                if addedWord in wordCounts:
-                    wordCounts[addedWord] += 1
-
-                if wordCounts == expectedWordCounts:
-                    result.append(start)
-
-        return result
+        for i in range(len_w):
+            cur_cnt = Counter({k: 0 for k in words})
+            for j in range(i, len(s) - len_w + 1, len_w):
+                word = s[j: j + len_w]
+                if word in cur_cnt:
+                    cur_cnt[word] += 1
+                if j >= len_con + i:
+                    r_word = s[j - len_con:j - len_con + len_w]
+                    if r_word in cur_cnt:
+                        cur_cnt[r_word] -= 1
+                if cur_cnt == cnt_con:
+                    ret.append(j + len_w - len_con)
+        return ret
 
 
 solution = Solution().findSubstring
 
-solution(s="barfoothefoobarman", words=["foo", "bar"])
-solution(s="wordgoodgoodgoodbestword", words=["word", "good", "best", "word"])
+# solution(s="barfoothefoobarman", words=["foo", "bar"])
+# solution(s="wordgoodgoodgoodbestword", words=["word", "good", "best", "word"])
 solution(s="barfoofoobarthefoobarman", words=["bar", "foo", "the"])
