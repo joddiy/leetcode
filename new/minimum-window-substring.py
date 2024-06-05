@@ -18,26 +18,27 @@ class Solution(object):
         """
         n = len(s)
         count = len(t)
-        count_w = Counter(t)
-        b, l = 0, sys.maxsize
-        i, j = 0, 0
+        count_c = Counter(t)
+        b, l = 0, sys.maxsize  # sub_string if found
+        i, j = 0, 0  # sliding window
         while j < n:
-            # extend the right side
-            if count_w[s[j]] > 0:
+            # move j to next
+            if count_c[s[j]] > 0:
                 count -= 1
-            count_w[s[j]] -= 1
+            count_c[s[j]] -= 1
 
-            # shrink the left side
+            # shrink i
             while count == 0:
-                # update the max length
-                if (j - i + 1) < l:
+                # update b and e
+                if j - i + 1 < l:
                     l = j - i + 1
                     b = i
-                count_w[s[i]] += 1
-                if count_w[s[i]] > 0:
+                count_c[s[i]] += 1
+                if count_c[s[i]] > 0:
                     count += 1
                 i += 1
             j += 1
+
         if l < sys.maxsize:
             return s[b:b + l]
         else:
