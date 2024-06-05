@@ -15,18 +15,18 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        self.max_ret = -sys.maxsize
+        self.ret = -sys.maxsize
 
         def recursive(node):
             if not node:
                 return 0
-            l = recursive(node.left)
-            r = recursive(node.right)
-            self.max_ret = max(self.max_ret, l + r + node.val)
-            return max(l + node.val, r + node.val, 0)
+            left = recursive(node.left)
+            right = recursive(node.right)
+            self.ret = max(self.ret, left + right + node.val)
+            return max(left + node.val, right + node.val, 0)
 
         recursive(root)
-        return self.max_ret
+        return self.ret
 
 
 solution = Solution().maxPathSum
