@@ -16,19 +16,20 @@ class Solution(object):
         :type maxWidth: int
         :rtype: List[str]
         """
-        result, cur, num_of_letters = [], [], 0
+        result, cur, n_letters = [], [], 0
 
         for word in words:
-            if num_of_letters + len(word) + len(cur) > maxWidth:
-                for i in range(maxWidth - num_of_letters):
+            # len(cur) means space between words
+            if n_letters + len(words) + len(cur) > maxWidth:
+                for i in range(maxWidth - n_letters):
                     cur[i % (len(cur) - 1 or 1)] += ' '
                 result.append(''.join(cur))
-                cur, num_of_letters = [], 0
+                cur, n_letters = [], 0
 
-            cur += [word]
-            num_of_letters += len(word)
+            cur.append(word)
+            n_letters += len(word)
 
-        return result + [' '.join(cur).ljust(maxWidth)]
+        return result
 
 
 solution = Solution().fullJustify
