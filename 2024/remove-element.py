@@ -5,6 +5,7 @@ import pprint
 
 
 class Solution(object):
+    @print_
     def removeElement(self, nums, val):
         """
         :type nums: List[int]
@@ -17,7 +18,6 @@ class Solution(object):
             _val = nums.pop(0)
             if _val != val:
                 nums.append(_val)
-            else:
                 k += 1
             i += 1
         return k
